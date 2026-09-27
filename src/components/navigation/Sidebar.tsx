@@ -23,6 +23,7 @@ import {
   Sun,
   Moon,
   Mail,
+  FileCheck,
 } from 'lucide-react';
 import { UserProfile } from '../../types';
 import { ROLE_CONFIGS, isModuleAllowedForRole } from '../../services/rolePermissions';
@@ -35,6 +36,7 @@ interface SidebarProps {
   onNavigate: (module: string) => void;
   documentsCount: number;
   activeProjectsCount: number;
+  pendingQuotesCount?: number;
   mobileOpen?: boolean;
   onCloseMobile?: () => void;
 }
@@ -45,6 +47,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
   onNavigate,
   documentsCount,
   activeProjectsCount,
+  pendingQuotesCount = 0,
   mobileOpen = false,
   onCloseMobile,
 }) => {
@@ -63,6 +66,15 @@ export const Sidebar: React.FC<SidebarProps> = ({
       label: 'Tableau de bord',
       subtext: 'Direction Générale (DG)',
       icon: LayoutDashboard,
+      pole: 'operations',
+    },
+    {
+      id: 'quotes',
+      label: 'Demandes de Devis (Web)',
+      subtext: 'Prospects & Chiffrages',
+      icon: FileCheck,
+      badge: pendingQuotesCount > 0 ? pendingQuotesCount : undefined,
+      badgeClass: 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 animate-pulse font-bold',
       pole: 'operations',
     },
     {

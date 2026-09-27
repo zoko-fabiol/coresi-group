@@ -76,6 +76,8 @@ import { MissionsModule } from './components/missions/MissionsModule';
 import { PayrollModule } from './components/payroll/PayrollModule';
 import { AccountingModule } from './components/accounting/AccountingModule';
 import { SitesModule } from './components/sites/SitesModule';
+import { QuotesModule } from './components/quotes/QuotesModule';
+import { QuoteRequestService } from './services/quotes/quoteRequestService';
 import { NotificationCenterModal } from './components/notifications/NotificationCenterModal';
 import { NotificationDropdown } from './components/notifications/NotificationDropdown';
 import { OcrValidationModal } from './components/ocr/OcrValidationModal';
@@ -381,9 +383,20 @@ export default function App() {
     return () => clearTimeout(timer);
   }, []);
 
+  // Demandes de devis web en attente
+  const [pendingQuotesCount, setPendingQuotesCount] = useState<number>(0);
+
+  useEffect(() => {
+    const unsub = QuoteRequestService.subscribeToQuoteRequests((data) => {
+      const pending = data.filter((q) => q.status === 'pending').length;
+      setPendingQuotesCount(pending);
+    });
+    return () => unsub();
+  }, []);
+
   const currentRoleConfig = ROLE_CONFIGS[currentUser.role] || ROLE_CONFIGS.invite;
   const isModuleActive = (modId: string) => {
-    if (modId === 'admin' || modId === 'settings' || modId === 'dashboard' || modId === 'reminders') return true;
+    if (modId === 'admin' || modId === 'settings' || modId === 'dashboard' || modId === 'reminders' || modId === 'quotes') return true;
     return AdminConfigService.isModuleEnabled(modId);
   };
 
@@ -454,6 +467,7 @@ export default function App() {
           }}
           documentsCount={documents.length}
           activeProjectsCount={projects.filter((p) => p.status === 'in_progress').length}
+          pendingQuotesCount={pendingQuotesCount}
           mobileOpen={mobileMenuOpen}
           onCloseMobile={() => setMobileMenuOpen(false)}
         />
@@ -524,6 +538,14 @@ export default function App() {
                     setSelectedDoc(doc);
                     setViewerOpen(true);
                   }}
+                />
+              )}
+
+              {currentModule === 'quotes' && (
+                <QuotesModule
+                  currentUser={currentUser}
+                  onNavigateToProjects={() => setCurrentModule('projects')}
+                  onNavigateToPartners={() => setCurrentModule('partners')}
                 />
               )}
 

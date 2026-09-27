@@ -1,0 +1,70 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --font-heading: 'Outfit', sans-serif;
+    --font-body: 'Inter', sans-serif;
+    --font-mono: 'JetBrains Mono', monospace;
+
+    /* CORESI Brand Colors */
+    --color-coresi-green: #3B7A2C;
+    --color-coresi-dark: #2D6020;
+    --color-coresi-light: #4FA33B;
+    --color-coresi-emerald: #10B981;
+    --color-coresi-orange: #F97316;
+  }
+
+  body {
+    font-family: var(--font-body);
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-heading);
+  }
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #020617;
+}
+::-webkit-scrollbar-thumb {
+  background: #1e293b;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #3B7A2C;
+}
+
+/* Glassmorphism utilities */
+.glass-panel {
+  background: rgba(15, 23, 42, 0.75);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.glass-panel-hover:hover {
+  border-color: rgba(59, 122, 44, 0.5);
+  box-shadow: 0 10px 30px -10px rgba(59, 122, 44, 0.25);
+}
+
+.glow-green {
+  box-shadow: 0 0 35px -5px rgba(59, 122, 44, 0.35);
+}
+
+.glow-orange {
+  box-shadow: 0 0 35px -5px rgba(249, 115, 22, 0.35);
+}
+
+/* Shimmer animation */
+@keyframes shimmer {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+.animate-shimmer {
+  animation: shimmer 2.5s infinite;
+}

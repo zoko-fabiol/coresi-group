@@ -21,6 +21,7 @@ export const ROLE_CONFIGS: Record<UserRole, RoleConfig> = {
     department: 'direction',
     allowedModules: [
       'dashboard',
+      'quotes',
       'ged',
       'scanner',
       'projects',
@@ -52,6 +53,7 @@ export const ROLE_CONFIGS: Record<UserRole, RoleConfig> = {
     department: 'direction',
     allowedModules: [
       'dashboard',
+      'quotes',
       'ged',
       'scanner',
       'projects',
@@ -82,6 +84,7 @@ export const ROLE_CONFIGS: Record<UserRole, RoleConfig> = {
     defaultUserName: 'Clarisse Bantsimba',
     department: 'comptabilite',
     allowedModules: [
+      'quotes',
       'finances',
       'accounting',
       'purchases',
@@ -116,6 +119,7 @@ export const ROLE_CONFIGS: Record<UserRole, RoleConfig> = {
     department: 'ingenierie',
     allowedModules: [
       'projects',
+      'quotes',
       'sites',
       'reports',
       'maintenance',
