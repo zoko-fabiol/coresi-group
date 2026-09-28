@@ -68,28 +68,28 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ currentLang, onOpenQuo
 
         {/* Key Statistics Grid */}
         <div className="mt-16 sm:mt-20 pt-8 border-t border-slate-800/80 grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
-          <div className="glass-panel rounded-2xl p-4 sm:p-5 border border-slate-800 hover:border-emerald-500/40 transition-colors">
+          <div className="glass-panel-dark rounded-2xl p-4 sm:p-5 border border-slate-700/60 hover:border-emerald-500/40 transition-colors shadow-xl">
             <div className="text-2xl sm:text-3xl lg:text-4xl font-black text-emerald-400 tracking-tight">
               {t.stat1Value}
             </div>
             <p className="text-xs sm:text-sm text-slate-300 mt-1 font-medium">{t.stat1Label}</p>
           </div>
 
-          <div className="glass-panel rounded-2xl p-4 sm:p-5 border border-slate-800 hover:border-emerald-500/40 transition-colors">
+          <div className="glass-panel-dark rounded-2xl p-4 sm:p-5 border border-slate-700/60 hover:border-emerald-500/40 transition-colors shadow-xl">
             <div className="text-2xl sm:text-3xl lg:text-4xl font-black text-white tracking-tight">
               {t.stat2Value}
             </div>
             <p className="text-xs sm:text-sm text-slate-300 mt-1 font-medium">{t.stat2Label}</p>
           </div>
 
-          <div className="glass-panel rounded-2xl p-4 sm:p-5 border border-slate-800 hover:border-emerald-500/40 transition-colors">
+          <div className="glass-panel-dark rounded-2xl p-4 sm:p-5 border border-slate-700/60 hover:border-emerald-500/40 transition-colors shadow-xl">
             <div className="text-2xl sm:text-3xl lg:text-4xl font-black text-amber-400 tracking-tight">
               {t.stat3Value}
             </div>
             <p className="text-xs sm:text-sm text-slate-300 mt-1 font-medium">{t.stat3Label}</p>
           </div>
 
-          <div className="glass-panel rounded-2xl p-4 sm:p-5 border border-slate-800 hover:border-emerald-500/40 transition-colors">
+          <div className="glass-panel-dark rounded-2xl p-4 sm:p-5 border border-slate-700/60 hover:border-emerald-500/40 transition-colors shadow-xl">
             <div className="text-2xl sm:text-3xl lg:text-4xl font-black text-cyan-400 tracking-tight">
               {t.stat4Value}
             </div>

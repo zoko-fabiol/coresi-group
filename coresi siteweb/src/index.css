@@ -36,17 +36,17 @@
   @media (prefers-color-scheme: light) {
     :root {
       --bg-base:        #f8fafc;
-      --bg-surface:     #f1f5f9;
-      --bg-card:        #e2e8f0;
-      --bg-card-hover:  #d4dce8;
+      --bg-surface:     #ffffff;
+      --bg-card:        #f1f5f9;
+      --bg-card-hover:  #e2e8f0;
       --text-primary:   #0f172a;
-      --text-secondary: #1e293b;
-      --text-muted:     #475569;
-      --text-subtle:    #64748b;
+      --text-secondary: #334155;
+      --text-muted:     #64748b;
+      --text-subtle:    #94a3b8;
       --border:         #e2e8f0;
       --border-light:   #cbd5e1;
-      --glass-bg:       rgba(241, 245, 249, 0.88);
-      --glass-border:   rgba(0, 0, 0, 0.07);
+      --glass-bg:       rgba(255, 255, 255, 0.88);
+      --glass-border:   rgba(0, 0, 0, 0.08);
       --input-bg:       #ffffff;
       --scrollbar-track: #f1f5f9;
       --scrollbar-thumb: #cbd5e1;
@@ -87,6 +87,14 @@
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
   border: 1px solid var(--glass-border);
+}
+
+/* Dark glass panel that stays dark even in light mode (for elements on photos/hero) */
+.glass-panel-dark {
+  background: rgba(15, 23, 42, 0.85);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
 }
 
 .glass-panel-hover:hover {

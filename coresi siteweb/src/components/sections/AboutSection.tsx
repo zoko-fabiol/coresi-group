@@ -35,7 +35,7 @@ export const AboutSection: React.FC<AboutSectionProps> = ({ currentLang }) => {
               <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/20 to-transparent" />
 
               {/* Floating Badge */}
-              <div className="absolute bottom-6 left-6 right-6 p-4 rounded-2xl glass-panel border border-emerald-500/30">
+              <div className="absolute bottom-6 left-6 right-6 p-4 rounded-2xl glass-panel-dark border border-emerald-500/40 shadow-2xl">
                 <div className="flex items-center gap-3">
                   <div className="w-10 h-10 rounded-xl bg-[#3B7A2C]/20 border border-[#3B7A2C]/40 text-emerald-400 flex items-center justify-center shrink-0">
                     <MapPin className="w-5 h-5" />

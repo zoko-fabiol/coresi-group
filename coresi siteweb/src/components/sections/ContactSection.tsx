@@ -172,7 +172,7 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ currentLang }) =
 
           {/* Right Column: Interactive Form */}
           <div className="lg:col-span-7">
-            <div className="rounded-3xl glass-panel p-6 sm:p-8 border shadow-2xl relative" style={{ borderColor: 'var(--border)' }}>
+            <div className="rounded-3xl p-6 sm:p-8 border shadow-2xl relative" style={{ backgroundColor: 'var(--bg-surface)', borderColor: 'var(--border)' }}>
               <h3 className="text-lg sm:text-xl font-black tracking-tight mb-1" style={{ color: 'var(--text-primary)' }}>
                 {t.formTitle}
               </h3>

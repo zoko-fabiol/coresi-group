@@ -39,8 +39,8 @@ export const ProductsSection: React.FC<ProductsSectionProps> = ({ currentLang, o
           {t.items.map((prod) => (
             <div
               key={prod.id}
-              className="glass-panel rounded-3xl border hover:border-amber-500/40 transition-all duration-300 p-6 flex flex-col justify-between space-y-6 group shadow-xl"
-              style={{ borderColor: 'var(--border)' }}
+              className="rounded-3xl border hover:border-amber-500/40 transition-all duration-300 p-6 flex flex-col justify-between space-y-6 group shadow-xl"
+              style={{ backgroundColor: 'var(--bg-surface)', borderColor: 'var(--border)' }}
             >
               <div className="space-y-4">
                 {/* Image Showcase */}
