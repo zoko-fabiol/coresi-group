@@ -94,13 +94,26 @@ export const QuoteModal: React.FC<QuoteModalProps> = ({ isOpen, onClose, current
     onClose();
   };
 
+  const inputStyle = {
+    backgroundColor: 'var(--input-bg)',
+    borderColor: 'var(--border)',
+    color: 'var(--text-primary)',
+  };
+
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-md animate-in fade-in">
-      <div className="relative w-full max-w-2xl bg-slate-900 border border-slate-800 rounded-3xl p-6 sm:p-8 shadow-2xl overflow-hidden max-h-[90vh] overflow-y-auto">
+    <div
+      className="fixed inset-0 z-50 flex items-center justify-center p-4 backdrop-blur-md animate-in fade-in"
+      style={{ backgroundColor: 'var(--overlay-bg)' }}
+    >
+      <div
+        className="relative w-full max-w-2xl rounded-3xl p-6 sm:p-8 shadow-2xl overflow-hidden max-h-[90vh] overflow-y-auto border"
+        style={{ backgroundColor: 'var(--bg-surface)', borderColor: 'var(--border)' }}
+      >
         {/* Close Button */}
         <button
           onClick={handleResetAndClose}
-          className="absolute top-5 right-5 p-2 rounded-xl text-slate-400 hover:text-white hover:bg-slate-800 transition-colors cursor-pointer"
+          className="absolute top-5 right-5 p-2 rounded-xl transition-colors cursor-pointer border"
+          style={{ color: 'var(--text-muted)', backgroundColor: 'var(--bg-card)', borderColor: 'var(--border)' }}
         >
           <X className="w-5 h-5" />
         </button>
@@ -115,14 +128,17 @@ export const QuoteModal: React.FC<QuoteModalProps> = ({ isOpen, onClose, current
               <span className="text-[10px] font-bold uppercase tracking-wider text-emerald-400 bg-emerald-950/80 px-3 py-1 rounded-full border border-emerald-800">
                 {currentLang === 'fr' ? 'Transmis au Pôle Chiffrage' : 'Forwarded to Estimating Team'}
               </span>
-              <h3 className="text-xl sm:text-2xl font-black text-white pt-2">
+              <h3 className="text-xl sm:text-2xl font-black pt-2" style={{ color: 'var(--text-primary)' }}>
                 {currentLang === 'fr' ? 'Demande de Devis Enregistrée !' : 'Quote Request Submitted!'}
               </h3>
             </div>
 
             {/* Reference Badge */}
-            <div className="p-4 rounded-2xl bg-slate-950 border border-slate-800 max-w-md mx-auto space-y-2">
-              <p className="text-[11px] text-slate-400 font-medium">
+            <div
+              className="p-4 rounded-2xl border max-w-md mx-auto space-y-2"
+              style={{ backgroundColor: 'var(--bg-base)', borderColor: 'var(--border)' }}
+            >
+              <p className="text-[11px] font-medium" style={{ color: 'var(--text-muted)' }}>
                 {currentLang === 'fr' ? 'Numéro de référence de votre dossier :' : 'Your file tracking reference:'}
               </p>
               <div className="flex items-center justify-center gap-2">
@@ -132,7 +148,8 @@ export const QuoteModal: React.FC<QuoteModalProps> = ({ isOpen, onClose, current
                 <button
                   type="button"
                   onClick={handleCopyRef}
-                  className="p-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white transition-colors cursor-pointer"
+                  className="p-1.5 rounded-lg transition-colors cursor-pointer border"
+                  style={{ backgroundColor: 'var(--bg-card)', color: 'var(--text-muted)', borderColor: 'var(--border)' }}
                   title="Copier la référence"
                 >
                   {copied ? <Check className="w-4 h-4 text-emerald-400" /> : <Copy className="w-4 h-4" />}
@@ -140,7 +157,7 @@ export const QuoteModal: React.FC<QuoteModalProps> = ({ isOpen, onClose, current
               </div>
             </div>
 
-            <p className="text-xs sm:text-sm text-slate-300 max-w-md mx-auto leading-relaxed">
+            <p className="text-xs sm:text-sm max-w-md mx-auto leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
               {currentLang === 'fr'
                 ? 'Merci pour votre confiance. Nos ingénieurs d\'études de chiffrage (Douala / Kribi) analysent vos paramètres et vous contacteront avec une proposition technique et financière sous 24 à 48 heures.'
                 : 'Thank you for reaching out. Our engineering estimators (Douala / Kribi) are reviewing your parameters and will get back to you with a detailed technical proposal within 24 to 48 hours.'}
@@ -150,7 +167,8 @@ export const QuoteModal: React.FC<QuoteModalProps> = ({ isOpen, onClose, current
               <button
                 type="button"
                 onClick={handleResetAndClose}
-                className="px-6 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-white font-bold text-xs transition-colors cursor-pointer"
+                className="px-6 py-2.5 rounded-xl font-bold text-xs transition-colors cursor-pointer border"
+                style={{ backgroundColor: 'var(--bg-card)', color: 'var(--text-primary)', borderColor: 'var(--border)' }}
               >
                 {currentLang === 'fr' ? 'Fermer cette fenêtre' : 'Close window'}
               </button>
@@ -163,10 +181,10 @@ export const QuoteModal: React.FC<QuoteModalProps> = ({ isOpen, onClose, current
                 <Calculator className="w-6 h-6" />
               </div>
               <div>
-                <h3 className="text-lg sm:text-xl font-black text-white tracking-tight">
+                <h3 className="text-lg sm:text-xl font-black tracking-tight" style={{ color: 'var(--text-primary)' }}>
                   {currentLang === 'fr' ? 'Demande de Cotation & Devis Express' : 'Fast Quotation & Engineering Estimate'}
                 </h3>
-                <p className="text-xs text-slate-400">
+                <p className="text-xs" style={{ color: 'var(--text-muted)' }}>
                   {currentLang === 'fr'
                     ? 'Recevez une estimation technique préliminaire adaptée à vos contraintes de chantier.'
                     : 'Get a preliminary technical cost estimate tailored to your site constraints.'}
@@ -184,60 +202,65 @@ export const QuoteModal: React.FC<QuoteModalProps> = ({ isOpen, onClose, current
             <form onSubmit={handleSubmit} className="space-y-4 text-xs">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <label className="block font-semibold text-slate-300 mb-1">Nom &amp; Prénom *</label>
+                  <label className="block font-semibold mb-1" style={{ color: 'var(--text-secondary)' }}>Nom &amp; Prénom *</label>
                   <input
                     type="text"
                     required
                     value={formData.name}
                     onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                     placeholder="M. Jean Dupont"
-                    className="w-full p-2.5 rounded-xl bg-slate-950 border border-slate-700 text-white focus:border-emerald-500 focus:outline-none"
+                    className="w-full p-2.5 rounded-xl border focus:border-emerald-500 focus:outline-none transition-colors"
+                    style={inputStyle}
                   />
                 </div>
                 <div>
-                  <label className="block font-semibold text-slate-300 mb-1">Entreprise / Mandataire</label>
+                  <label className="block font-semibold mb-1" style={{ color: 'var(--text-secondary)' }}>Entreprise / Mandataire</label>
                   <input
                     type="text"
                     value={formData.company}
                     onChange={(e) => setFormData({ ...formData, company: e.target.value })}
                     placeholder="Ex: Société Pétrolière ou BTP"
-                    className="w-full p-2.5 rounded-xl bg-slate-950 border border-slate-700 text-white focus:border-emerald-500 focus:outline-none"
+                    className="w-full p-2.5 rounded-xl border focus:border-emerald-500 focus:outline-none transition-colors"
+                    style={inputStyle}
                   />
                 </div>
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <label className="block font-semibold text-slate-300 mb-1">E-mail Professionnel *</label>
+                  <label className="block font-semibold mb-1" style={{ color: 'var(--text-secondary)' }}>E-mail Professionnel *</label>
                   <input
                     type="email"
                     required
                     value={formData.email}
                     onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                     placeholder="direction@client.com"
-                    className="w-full p-2.5 rounded-xl bg-slate-950 border border-slate-700 text-white focus:border-emerald-500 focus:outline-none"
+                    className="w-full p-2.5 rounded-xl border focus:border-emerald-500 focus:outline-none transition-colors"
+                    style={inputStyle}
                   />
                 </div>
                 <div>
-                  <label className="block font-semibold text-slate-300 mb-1">Téléphone / WhatsApp *</label>
+                  <label className="block font-semibold mb-1" style={{ color: 'var(--text-secondary)' }}>Téléphone / WhatsApp *</label>
                   <input
                     type="tel"
                     required
                     value={formData.phone}
                     onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
                     placeholder="+237 6XX XX XX XX"
-                    className="w-full p-2.5 rounded-xl bg-slate-950 border border-slate-700 text-white focus:border-emerald-500 focus:outline-none font-mono"
+                    className="w-full p-2.5 rounded-xl border focus:border-emerald-500 focus:outline-none transition-colors font-mono"
+                    style={inputStyle}
                   />
                 </div>
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                 <div>
-                  <label className="block font-semibold text-slate-300 mb-1">Corps d'État</label>
+                  <label className="block font-semibold mb-1" style={{ color: 'var(--text-secondary)' }}>Corps d'État</label>
                   <select
                     value={formData.service}
                     onChange={(e) => setFormData({ ...formData, service: e.target.value })}
-                    className="w-full p-2.5 rounded-xl bg-slate-950 border border-slate-700 text-white focus:border-emerald-500 focus:outline-none cursor-pointer"
+                    className="w-full p-2.5 rounded-xl border focus:border-emerald-500 focus:outline-none cursor-pointer transition-colors"
+                    style={inputStyle}
                   >
                     <option value="erection">Montage d'Usines</option>
                     <option value="chaudronnerie">Chaudronnerie</option>
@@ -249,11 +272,12 @@ export const QuoteModal: React.FC<QuoteModalProps> = ({ isOpen, onClose, current
                 </div>
 
                 <div>
-                  <label className="block font-semibold text-slate-300 mb-1">Localisation Site</label>
+                  <label className="block font-semibold mb-1" style={{ color: 'var(--text-secondary)' }}>Localisation Site</label>
                   <select
                     value={formData.location}
                     onChange={(e) => setFormData({ ...formData, location: e.target.value })}
-                    className="w-full p-2.5 rounded-xl bg-slate-950 border border-slate-700 text-white focus:border-emerald-500 focus:outline-none cursor-pointer"
+                    className="w-full p-2.5 rounded-xl border focus:border-emerald-500 focus:outline-none cursor-pointer transition-colors"
+                    style={inputStyle}
                   >
                     <option value="Douala">Douala &amp; Environs</option>
                     <option value="Kribi">Kribi (Port / Offshore)</option>
@@ -264,11 +288,12 @@ export const QuoteModal: React.FC<QuoteModalProps> = ({ isOpen, onClose, current
                 </div>
 
                 <div>
-                  <label className="block font-semibold text-slate-300 mb-1">Échéance Souhaitée</label>
+                  <label className="block font-semibold mb-1" style={{ color: 'var(--text-secondary)' }}>Échéance Souhaitée</label>
                   <select
                     value={formData.timeline}
                     onChange={(e) => setFormData({ ...formData, timeline: e.target.value })}
-                    className="w-full p-2.5 rounded-xl bg-slate-950 border border-slate-700 text-white focus:border-emerald-500 focus:outline-none cursor-pointer"
+                    className="w-full p-2.5 rounded-xl border focus:border-emerald-500 focus:outline-none cursor-pointer transition-colors"
+                    style={inputStyle}
                   >
                     <option value="Urgent">Urgent (&lt; 1 mois)</option>
                     <option value="1-3 mois">1 à 3 mois</option>
@@ -279,13 +304,14 @@ export const QuoteModal: React.FC<QuoteModalProps> = ({ isOpen, onClose, current
               </div>
 
               <div>
-                <label className="block font-semibold text-slate-300 mb-1">Spécifications ou Remarques Particulières</label>
+                <label className="block font-semibold mb-1" style={{ color: 'var(--text-secondary)' }}>Spécifications ou Remarques Particulières</label>
                 <textarea
                   rows={3}
                   value={formData.details}
                   onChange={(e) => setFormData({ ...formData, details: e.target.value })}
                   placeholder="Volumes, diamètres, nuances d'acier (Carbone / Inox), contraintes d'accès ou documents disponibles..."
-                  className="w-full p-2.5 rounded-xl bg-slate-950 border border-slate-700 text-white focus:border-emerald-500 focus:outline-none resize-none"
+                  className="w-full p-2.5 rounded-xl border focus:border-emerald-500 focus:outline-none resize-none transition-colors"
+                  style={inputStyle}
                 />
               </div>
 

@@ -6,16 +6,59 @@
     --font-body: 'Inter', sans-serif;
     --font-mono: 'JetBrains Mono', monospace;
 
-    /* CORESI Brand Colors */
+    /* CORESI Brand Colors (invariants) */
     --color-coresi-green: #3B7A2C;
     --color-coresi-dark: #2D6020;
     --color-coresi-light: #4FA33B;
     --color-coresi-emerald: #10B981;
     --color-coresi-orange: #F97316;
+
+    /* === THÈME SOMBRE (défaut) === */
+    --bg-base:        #020617;
+    --bg-surface:     #0f172a;
+    --bg-card:        #1e293b;
+    --bg-card-hover:  #243447;
+    --text-primary:   #f1f5f9;
+    --text-secondary: #cbd5e1;
+    --text-muted:     #94a3b8;
+    --text-subtle:    #64748b;
+    --border:         #1e293b;
+    --border-light:   #334155;
+    --glass-bg:       rgba(15, 23, 42, 0.75);
+    --glass-border:   rgba(255, 255, 255, 0.08);
+    --input-bg:       #020617;
+    --scrollbar-track: #020617;
+    --scrollbar-thumb: #1e293b;
+    --overlay-bg:     rgba(2, 6, 23, 0.80);
+  }
+
+  /* === THÈME CLAIR (automatique si appareil en mode clair) === */
+  @media (prefers-color-scheme: light) {
+    :root {
+      --bg-base:        #f8fafc;
+      --bg-surface:     #f1f5f9;
+      --bg-card:        #e2e8f0;
+      --bg-card-hover:  #d4dce8;
+      --text-primary:   #0f172a;
+      --text-secondary: #1e293b;
+      --text-muted:     #475569;
+      --text-subtle:    #64748b;
+      --border:         #e2e8f0;
+      --border-light:   #cbd5e1;
+      --glass-bg:       rgba(241, 245, 249, 0.88);
+      --glass-border:   rgba(0, 0, 0, 0.07);
+      --input-bg:       #ffffff;
+      --scrollbar-track: #f1f5f9;
+      --scrollbar-thumb: #cbd5e1;
+      --overlay-bg:     rgba(15, 23, 42, 0.70);
+    }
   }
 
   body {
     font-family: var(--font-body);
+    background-color: var(--bg-base);
+    color: var(--text-primary);
+    transition: background-color 0.3s ease, color 0.3s ease;
   }
 
   h1, h2, h3, h4, h5, h6 {
@@ -28,10 +71,10 @@
   width: 8px;
 }
 ::-webkit-scrollbar-track {
-  background: #020617;
+  background: var(--scrollbar-track);
 }
 ::-webkit-scrollbar-thumb {
-  background: #1e293b;
+  background: var(--scrollbar-thumb);
   border-radius: 4px;
 }
 ::-webkit-scrollbar-thumb:hover {
@@ -40,10 +83,10 @@
 
 /* Glassmorphism utilities */
 .glass-panel {
-  background: rgba(15, 23, 42, 0.75);
+  background: var(--glass-bg);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  border: 1px solid var(--glass-border);
 }
 
 .glass-panel-hover:hover {

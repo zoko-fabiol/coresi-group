@@ -39,15 +39,18 @@ export const Navbar: React.FC<NavbarProps> = ({
   return (
     <>
       {/* Top Notification Bar */}
-      <div className="bg-slate-950/90 border-b border-slate-800 text-[11px] text-slate-400 py-1.5 px-4 sm:px-8 hidden md:block">
+      <div
+        className="border-b text-[11px] py-1.5 px-4 sm:px-8 hidden md:block"
+        style={{ backgroundColor: 'var(--bg-surface)', borderColor: 'var(--border)', color: 'var(--text-muted)' }}
+      >
         <div className="max-w-7xl mx-auto flex items-center justify-between">
           <div className="flex items-center gap-4">
             <span className="flex items-center gap-1.5 text-emerald-400 font-medium">
               <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
               Siège Douala & Ateliers Kribi, Cameroun
             </span>
-            <span className="text-slate-600">|</span>
-            <span className="flex items-center gap-1 text-slate-300">
+            <span style={{ color: 'var(--text-subtle)' }}>|</span>
+            <span className="flex items-center gap-1" style={{ color: 'var(--text-secondary)' }}>
               <Shield className="w-3.5 h-3.5 text-[#3B7A2C]" />
               Conformité ASME IX & ISO 9606 certifiée
             </span>
@@ -55,13 +58,14 @@ export const Navbar: React.FC<NavbarProps> = ({
           <div className="flex items-center gap-4">
             <a
               href="tel:+237682368282"
-              className="flex items-center gap-1.5 text-slate-300 hover:text-white transition-colors"
+              className="flex items-center gap-1.5 transition-colors hover:text-emerald-400"
+              style={{ color: 'var(--text-secondary)' }}
             >
               <Phone className="w-3.5 h-3.5 text-emerald-400" />
               <span>{t.phone}</span>
             </a>
-            <span className="text-slate-600">|</span>
-            <span className="text-slate-400">Lun – Ven : 07h30 – 18h00 (Astreinte 24/7)</span>
+            <span style={{ color: 'var(--text-subtle)' }}>|</span>
+            <span style={{ color: 'var(--text-muted)' }}>Lun – Ven : 07h30 – 18h00 (Astreinte 24/7)</span>
           </div>
         </div>
       </div>
@@ -70,9 +74,13 @@ export const Navbar: React.FC<NavbarProps> = ({
       <header
         className={`sticky top-0 z-50 transition-all duration-300 ${
           isScrolled
-            ? 'glass-panel shadow-2xl py-3 border-b border-slate-800/80'
-            : 'bg-slate-950/80 backdrop-blur-md py-4 border-b border-slate-900'
+            ? 'glass-panel shadow-2xl py-3'
+            : 'backdrop-blur-md py-4'
         }`}
+        style={{
+          borderBottom: `1px solid var(--border)`,
+          backgroundColor: isScrolled ? undefined : 'var(--glass-bg)',
+        }}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
           {/* Logo Brand */}
@@ -85,10 +93,10 @@ export const Navbar: React.FC<NavbarProps> = ({
               />
             </div>
             <div className="flex flex-col">
-              <span className="text-base sm:text-lg font-black tracking-tight text-white group-hover:text-emerald-400 transition-colors">
+              <span className="text-base sm:text-lg font-black tracking-tight group-hover:text-emerald-400 transition-colors" style={{ color: 'var(--text-primary)' }}>
                 CORESI <span className="text-[#3B7A2C]">INTERNATIONAL</span>
               </span>
-              <span className="text-[10px] tracking-wider text-slate-400 uppercase font-semibold">
+              <span className="text-[10px] tracking-wider uppercase font-semibold" style={{ color: 'var(--text-muted)' }}>
                 Génie Industriel &amp; Métallique
               </span>
             </div>
@@ -100,7 +108,8 @@ export const Navbar: React.FC<NavbarProps> = ({
               <a
                 key={link.href}
                 href={link.href}
-                className="px-3 py-1.5 text-xs font-semibold text-slate-300 hover:text-white hover:bg-slate-800/60 rounded-lg transition-all"
+                className="px-3 py-1.5 text-xs font-semibold rounded-lg transition-all hover:text-white hover:bg-[#3B7A2C]/80"
+                style={{ color: 'var(--text-muted)' }}
               >
                 {link.label}
               </a>
@@ -110,14 +119,18 @@ export const Navbar: React.FC<NavbarProps> = ({
           {/* Action CTAs */}
           <div className="hidden sm:flex items-center gap-3">
             {/* Language Toggle Button */}
-            <div className="flex items-center p-1 bg-slate-900 border border-slate-800 rounded-xl">
+            <div
+              className="flex items-center p-1 rounded-xl border"
+              style={{ backgroundColor: 'var(--bg-card)', borderColor: 'var(--border)' }}
+            >
               <button
                 onClick={() => onLanguageChange('fr')}
                 className={`px-2 py-1 text-[11px] font-bold rounded-lg transition-all cursor-pointer ${
                   currentLang === 'fr'
                     ? 'bg-[#3B7A2C] text-white shadow-xs'
-                    : 'text-slate-400 hover:text-slate-200'
+                    : 'hover:text-white'
                 }`}
+                style={currentLang !== 'fr' ? { color: 'var(--text-muted)' } : {}}
               >
                 FR
               </button>
@@ -126,8 +139,9 @@ export const Navbar: React.FC<NavbarProps> = ({
                 className={`px-2 py-1 text-[11px] font-bold rounded-lg transition-all cursor-pointer ${
                   currentLang === 'en'
                     ? 'bg-[#3B7A2C] text-white shadow-xs'
-                    : 'text-slate-400 hover:text-slate-200'
+                    : 'hover:text-white'
                 }`}
+                style={currentLang !== 'en' ? { color: 'var(--text-muted)' } : {}}
               >
                 EN
               </button>
@@ -146,20 +160,25 @@ export const Navbar: React.FC<NavbarProps> = ({
 
           {/* Mobile Menu Hamburger */}
           <div className="flex items-center gap-2 lg:hidden">
-            <div className="flex items-center p-0.5 bg-slate-900 border border-slate-800 rounded-lg sm:hidden">
+            <div
+              className="flex items-center p-0.5 rounded-lg border sm:hidden"
+              style={{ backgroundColor: 'var(--bg-card)', borderColor: 'var(--border)' }}
+            >
               <button
                 onClick={() => onLanguageChange('fr')}
                 className={`px-2 py-1 text-[10px] font-bold rounded-md ${
-                  currentLang === 'fr' ? 'bg-[#3B7A2C] text-white' : 'text-slate-400'
+                  currentLang === 'fr' ? 'bg-[#3B7A2C] text-white' : ''
                 }`}
+                style={currentLang !== 'fr' ? { color: 'var(--text-muted)' } : {}}
               >
                 FR
               </button>
               <button
                 onClick={() => onLanguageChange('en')}
                 className={`px-2 py-1 text-[10px] font-bold rounded-md ${
-                  currentLang === 'en' ? 'bg-[#3B7A2C] text-white' : 'text-slate-400'
+                  currentLang === 'en' ? 'bg-[#3B7A2C] text-white' : ''
                 }`}
+                style={currentLang !== 'en' ? { color: 'var(--text-muted)' } : {}}
               >
                 EN
               </button>
@@ -167,7 +186,8 @@ export const Navbar: React.FC<NavbarProps> = ({
 
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="p-2 text-slate-300 hover:text-white rounded-xl bg-slate-900 border border-slate-800"
+              className="p-2 rounded-xl border transition-colors"
+              style={{ color: 'var(--text-secondary)', backgroundColor: 'var(--bg-card)', borderColor: 'var(--border)' }}
               aria-label="Toggle navigation menu"
             >
               {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
@@ -177,21 +197,25 @@ export const Navbar: React.FC<NavbarProps> = ({
 
         {/* Mobile Navigation Drawer */}
         {mobileMenuOpen && (
-          <div className="lg:hidden bg-slate-950/95 border-b border-slate-800 px-6 py-5 space-y-3 animate-in fade-in slide-in-from-top-3">
+          <div
+            className="lg:hidden border-b px-6 py-5 space-y-3 animate-in fade-in slide-in-from-top-3"
+            style={{ backgroundColor: 'var(--bg-surface)', borderColor: 'var(--border)' }}
+          >
             <nav className="flex flex-col space-y-2">
               {navLinks.map((link) => (
                 <a
                   key={link.href}
                   href={link.href}
                   onClick={() => setMobileMenuOpen(false)}
-                  className="px-3 py-2 text-sm font-semibold text-slate-200 hover:text-emerald-400 hover:bg-slate-900 rounded-xl"
+                  className="px-3 py-2 text-sm font-semibold hover:text-emerald-400 rounded-xl transition-colors"
+                  style={{ color: 'var(--text-secondary)' }}
                 >
                   {link.label}
                 </a>
               ))}
             </nav>
 
-            <div className="pt-4 border-t border-slate-800 flex flex-col gap-3">
+            <div className="pt-4 flex flex-col gap-3" style={{ borderTop: `1px solid var(--border)` }}>
               <button
                 onClick={() => {
                   setMobileMenuOpen(false);
@@ -205,7 +229,8 @@ export const Navbar: React.FC<NavbarProps> = ({
 
               <a
                 href="tel:+237682368282"
-                className="w-full py-2.5 bg-slate-900 border border-slate-800 text-slate-200 rounded-xl text-xs font-semibold flex items-center justify-center gap-2"
+                className="w-full py-2.5 rounded-xl text-xs font-semibold flex items-center justify-center gap-2 border"
+                style={{ backgroundColor: 'var(--bg-card)', borderColor: 'var(--border)', color: 'var(--text-secondary)' }}
               >
                 <Phone className="w-4 h-4 text-emerald-400" />
                 <span>Appel direct : {t.phone}</span>

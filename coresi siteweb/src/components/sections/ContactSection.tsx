@@ -72,19 +72,32 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ currentLang }) =
     }
   };
 
+  const inputStyle = {
+    backgroundColor: 'var(--input-bg)',
+    borderColor: 'var(--border)',
+    color: 'var(--text-primary)',
+  };
+
   return (
-    <section id="contact" className="py-20 lg:py-28 bg-slate-900/70 border-t border-slate-800/80 relative">
+    <section
+      id="contact"
+      className="py-20 lg:py-28 relative"
+      style={{ backgroundColor: 'var(--bg-surface)', borderTop: `1px solid var(--border)` }}
+    >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="text-center max-w-3xl mx-auto space-y-3 mb-16">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-slate-800 border border-slate-700 text-emerald-400 text-xs font-bold uppercase tracking-wider">
+          <div
+            className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full text-emerald-400 text-xs font-bold uppercase tracking-wider border"
+            style={{ backgroundColor: 'var(--bg-card)', borderColor: 'var(--border-light)' }}
+          >
             <Mail className="w-3.5 h-3.5" />
             <span>{t.badge}</span>
           </div>
-          <h2 className="text-2xl sm:text-4xl font-extrabold text-white tracking-tight">
+          <h2 className="text-2xl sm:text-4xl font-extrabold tracking-tight" style={{ color: 'var(--text-primary)' }}>
             {t.title}
           </h2>
-          <p className="text-xs sm:text-sm text-slate-400 leading-relaxed">
+          <p className="text-xs sm:text-sm leading-relaxed" style={{ color: 'var(--text-muted)' }}>
             {t.subtitle}
           </p>
         </div>
@@ -93,89 +106,77 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ currentLang }) =
           {/* Left Column: Direct Contacts */}
           <div className="lg:col-span-5 space-y-6">
             {/* Douala HQ Card */}
-            <div className="p-6 rounded-3xl bg-slate-950/80 border border-slate-800 space-y-3">
+            <div className="p-6 rounded-3xl border space-y-3" style={{ backgroundColor: 'var(--bg-base)', borderColor: 'var(--border)' }}>
               <div className="flex items-center gap-3">
                 <div className="w-10 h-10 rounded-xl bg-emerald-950 border border-emerald-800 text-emerald-400 flex items-center justify-center shrink-0">
                   <Building2 className="w-5 h-5" />
                 </div>
                 <div>
-                  <h3 className="text-sm font-bold text-white">{t.addressTitle}</h3>
-                  <p className="text-xs text-slate-400">{t.addressText}</p>
+                  <h3 className="text-sm font-bold" style={{ color: 'var(--text-primary)' }}>{t.addressTitle}</h3>
+                  <p className="text-xs" style={{ color: 'var(--text-muted)' }}>{t.addressText}</p>
                 </div>
               </div>
             </div>
 
             {/* Kribi Base Card */}
-            <div className="p-6 rounded-3xl bg-slate-950/80 border border-slate-800 space-y-3">
+            <div className="p-6 rounded-3xl border space-y-3" style={{ backgroundColor: 'var(--bg-base)', borderColor: 'var(--border)' }}>
               <div className="flex items-center gap-3">
                 <div className="w-10 h-10 rounded-xl bg-cyan-950 border border-cyan-800 text-cyan-400 flex items-center justify-center shrink-0">
                   <MapPin className="w-5 h-5" />
                 </div>
                 <div>
-                  <h3 className="text-sm font-bold text-white">{t.kribiTitle}</h3>
-                  <p className="text-xs text-slate-400">{t.kribiText}</p>
+                  <h3 className="text-sm font-bold" style={{ color: 'var(--text-primary)' }}>{t.kribiTitle}</h3>
+                  <p className="text-xs" style={{ color: 'var(--text-muted)' }}>{t.kribiText}</p>
                 </div>
               </div>
             </div>
 
             {/* Direct Phone & Email Cards */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <div className="p-5 rounded-2xl bg-slate-950/80 border border-slate-800 space-y-2">
-                <div className="flex items-center gap-2 text-xs font-bold text-slate-200">
+              <div className="p-5 rounded-2xl border space-y-2" style={{ backgroundColor: 'var(--bg-base)', borderColor: 'var(--border)' }}>
+                <div className="flex items-center gap-2 text-xs font-bold" style={{ color: 'var(--text-secondary)' }}>
                   <Phone className="w-4 h-4 text-emerald-400" />
                   <span>{t.phoneTitle}</span>
                 </div>
-                <a
-                  href="tel:+237682368282"
-                  className="text-xs text-slate-300 hover:text-emerald-400 block font-mono font-semibold"
-                >
+                <a href="tel:+237682368282" className="text-xs block font-mono font-semibold hover:text-emerald-400 transition-colors" style={{ color: 'var(--text-secondary)' }}>
                   +237 682 36 82 82
                 </a>
-                <a
-                  href="tel:+237677889900"
-                  className="text-xs text-slate-300 hover:text-emerald-400 block font-mono font-semibold"
-                >
+                <a href="tel:+237677889900" className="text-xs block font-mono font-semibold hover:text-emerald-400 transition-colors" style={{ color: 'var(--text-secondary)' }}>
                   +237 677 88 99 00
                 </a>
               </div>
 
-              <div className="p-5 rounded-2xl bg-slate-950/80 border border-slate-800 space-y-2">
-                <div className="flex items-center gap-2 text-xs font-bold text-slate-200">
+              <div className="p-5 rounded-2xl border space-y-2" style={{ backgroundColor: 'var(--bg-base)', borderColor: 'var(--border)' }}>
+                <div className="flex items-center gap-2 text-xs font-bold" style={{ color: 'var(--text-secondary)' }}>
                   <Mail className="w-4 h-4 text-amber-400" />
                   <span>{t.emailTitle}</span>
                 </div>
-                <a
-                  href="mailto:contact@coresi-group.com"
-                  className="text-xs text-slate-300 hover:text-amber-400 block font-medium truncate"
-                >
+                <a href="mailto:contact@coresi-group.com" className="text-xs block font-medium truncate hover:text-amber-400 transition-colors" style={{ color: 'var(--text-secondary)' }}>
                   contact@coresi-group.com
                 </a>
-                <a
-                  href="mailto:gic.coresi@gmail.com"
-                  className="text-xs text-slate-300 hover:text-amber-400 block font-medium truncate"
-                >
+                <a href="mailto:gic.coresi@gmail.com" className="text-xs block font-medium truncate hover:text-amber-400 transition-colors" style={{ color: 'var(--text-secondary)' }}>
                   gic.coresi@gmail.com
                 </a>
               </div>
             </div>
 
             {/* Operating Hours */}
-            <div className="p-5 rounded-2xl bg-slate-950/80 border border-slate-800 flex items-start gap-3">
+            <div className="p-5 rounded-2xl border flex items-start gap-3" style={{ backgroundColor: 'var(--bg-base)', borderColor: 'var(--border)' }}>
               <Clock className="w-5 h-5 text-cyan-400 shrink-0 mt-0.5" />
               <div>
-                <h4 className="text-xs font-bold text-white">{t.hoursTitle}</h4>
-                <p className="text-xs text-slate-400 mt-1">{t.hoursText}</p>
+                <h4 className="text-xs font-bold" style={{ color: 'var(--text-primary)' }}>{t.hoursTitle}</h4>
+                <p className="text-xs mt-1" style={{ color: 'var(--text-muted)' }}>{t.hoursText}</p>
               </div>
             </div>
           </div>
 
           {/* Right Column: Interactive Form */}
           <div className="lg:col-span-7">
-            <div className="rounded-3xl glass-panel p-6 sm:p-8 border border-slate-800 shadow-2xl relative">
-              <h3 className="text-lg sm:text-xl font-black text-white tracking-tight mb-1">
+            <div className="rounded-3xl glass-panel p-6 sm:p-8 border shadow-2xl relative" style={{ borderColor: 'var(--border)' }}>
+              <h3 className="text-lg sm:text-xl font-black tracking-tight mb-1" style={{ color: 'var(--text-primary)' }}>
                 {t.formTitle}
               </h3>
-              <p className="text-xs text-slate-400 mb-6">
+              <p className="text-xs mb-6" style={{ color: 'var(--text-muted)' }}>
                 {t.formSubtitle}
               </p>
 
@@ -192,9 +193,9 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ currentLang }) =
                   </div>
 
                   {sentReference && (
-                    <div className="p-3 rounded-xl bg-slate-950/90 border border-slate-800 max-w-sm mx-auto flex items-center justify-between gap-3">
+                    <div className="p-3 rounded-xl border max-w-sm mx-auto flex items-center justify-between gap-3" style={{ backgroundColor: 'var(--bg-base)', borderColor: 'var(--border)' }}>
                       <div className="text-left">
-                        <span className="block text-[10px] text-slate-400 uppercase font-mono">
+                        <span className="block text-[10px] uppercase font-mono" style={{ color: 'var(--text-muted)' }}>
                           {currentLang === 'fr' ? 'Réf. Dossier' : 'Ref. Code'}
                         </span>
                         <span className="text-sm font-mono font-bold text-emerald-400 tracking-wider">
@@ -204,7 +205,8 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ currentLang }) =
                       <button
                         type="button"
                         onClick={handleCopyRef}
-                        className="px-2.5 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white text-xs flex items-center gap-1.5 transition-colors cursor-pointer"
+                        className="px-2.5 py-1.5 rounded-lg text-xs flex items-center gap-1.5 transition-colors cursor-pointer border"
+                        style={{ backgroundColor: 'var(--bg-card)', color: 'var(--text-muted)', borderColor: 'var(--border)' }}
                         title="Copier la référence"
                       >
                         {copied ? <Check className="w-3.5 h-3.5 text-emerald-400" /> : <Copy className="w-3.5 h-3.5" />}
@@ -216,7 +218,8 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ currentLang }) =
                   <button
                     type="button"
                     onClick={() => setSubmitted(false)}
-                    className="text-xs text-slate-400 hover:text-white underline cursor-pointer pt-1 block mx-auto"
+                    className="text-xs hover:text-white underline cursor-pointer pt-1 block mx-auto"
+                    style={{ color: 'var(--text-muted)' }}
                   >
                     {currentLang === 'fr' ? 'Envoyer une autre demande' : 'Send another inquiry'}
                   </button>
@@ -231,7 +234,7 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ currentLang }) =
                   )}
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
-                      <label className="block text-xs font-semibold text-slate-300 mb-1.5">
+                      <label className="block text-xs font-semibold mb-1.5" style={{ color: 'var(--text-secondary)' }}>
                         {t.fullName} *
                       </label>
                       <input
@@ -240,12 +243,13 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ currentLang }) =
                         value={formData.name}
                         onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                         placeholder="Ex: M. Jean MBALLA (Ingénieur)"
-                        className="w-full px-3.5 py-2.5 rounded-xl bg-slate-950 border border-slate-800 focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 text-xs text-white placeholder-slate-500 transition-all"
+                        className="w-full px-3.5 py-2.5 rounded-xl border focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 text-xs placeholder-slate-500 transition-all outline-none"
+                        style={inputStyle}
                       />
                     </div>
 
                     <div>
-                      <label className="block text-xs font-semibold text-slate-300 mb-1.5">
+                      <label className="block text-xs font-semibold mb-1.5" style={{ color: 'var(--text-secondary)' }}>
                         {t.email} *
                       </label>
                       <input
@@ -254,14 +258,15 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ currentLang }) =
                         value={formData.email}
                         onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                         placeholder="nom@entreprise.com"
-                        className="w-full px-3.5 py-2.5 rounded-xl bg-slate-950 border border-slate-800 focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 text-xs text-white placeholder-slate-500 transition-all"
+                        className="w-full px-3.5 py-2.5 rounded-xl border focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 text-xs placeholder-slate-500 transition-all outline-none"
+                        style={inputStyle}
                       />
                     </div>
                   </div>
 
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
-                      <label className="block text-xs font-semibold text-slate-300 mb-1.5">
+                      <label className="block text-xs font-semibold mb-1.5" style={{ color: 'var(--text-secondary)' }}>
                         {t.phone} *
                       </label>
                       <input
@@ -270,19 +275,21 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ currentLang }) =
                         value={formData.phone}
                         onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
                         placeholder="+237 6XX XX XX XX"
-                        className="w-full px-3.5 py-2.5 rounded-xl bg-slate-950 border border-slate-800 focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 text-xs text-white placeholder-slate-500 transition-all font-mono"
+                        className="w-full px-3.5 py-2.5 rounded-xl border focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 text-xs placeholder-slate-500 transition-all font-mono outline-none"
+                        style={inputStyle}
                       />
                     </div>
 
                     <div>
-                      <label className="block text-xs font-semibold text-slate-300 mb-1.5">
+                      <label className="block text-xs font-semibold mb-1.5" style={{ color: 'var(--text-secondary)' }}>
                         {t.serviceSelect} *
                       </label>
                       <select
                         required
                         value={formData.service}
                         onChange={(e) => setFormData({ ...formData, service: e.target.value })}
-                        className="w-full px-3.5 py-2.5 rounded-xl bg-slate-950 border border-slate-800 focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 text-xs text-white transition-all cursor-pointer"
+                        className="w-full px-3.5 py-2.5 rounded-xl border focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 text-xs transition-all cursor-pointer outline-none"
+                        style={inputStyle}
                       >
                         <option value="">{t.servicePlaceholder}</option>
                         <option value="erection">Montage d'Usines &amp; Unités Industrielles</option>
@@ -297,7 +304,7 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ currentLang }) =
                   </div>
 
                   <div>
-                    <label className="block text-xs font-semibold text-slate-300 mb-1.5">
+                    <label className="block text-xs font-semibold mb-1.5" style={{ color: 'var(--text-secondary)' }}>
                       {t.message} *
                     </label>
                     <textarea
@@ -306,7 +313,8 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ currentLang }) =
                       value={formData.message}
                       onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                       placeholder={t.messagePlaceholder}
-                      className="w-full px-3.5 py-2.5 rounded-xl bg-slate-950 border border-slate-800 focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 text-xs text-white placeholder-slate-500 transition-all resize-y"
+                      className="w-full px-3.5 py-2.5 rounded-xl border focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 text-xs placeholder-slate-500 transition-all resize-y outline-none"
+                      style={inputStyle}
                     />
                   </div>
 

@@ -21,17 +21,23 @@ export const PartnersSection: React.FC<PartnersSectionProps> = ({ currentLang })
   ];
 
   return (
-    <section className="py-16 sm:py-20 bg-slate-900/60 border-t border-b border-slate-800/80">
+    <section
+      className="py-16 sm:py-20"
+      style={{ backgroundColor: 'var(--bg-surface)', borderTop: `1px solid var(--border)`, borderBottom: `1px solid var(--border)` }}
+    >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center max-w-2xl mx-auto space-y-2 mb-12">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-800 text-emerald-400 text-xs font-bold uppercase tracking-wider">
+          <div
+            className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-emerald-400 text-xs font-bold uppercase tracking-wider"
+            style={{ backgroundColor: 'var(--bg-card)' }}
+          >
             <Handshake className="w-3.5 h-3.5" />
             <span>{t.badge}</span>
           </div>
-          <h2 className="text-xl sm:text-3xl font-extrabold text-white tracking-tight">
+          <h2 className="text-xl sm:text-3xl font-extrabold tracking-tight" style={{ color: 'var(--text-primary)' }}>
             {t.title}
           </h2>
-          <p className="text-xs sm:text-sm text-slate-400">
+          <p className="text-xs sm:text-sm" style={{ color: 'var(--text-muted)' }}>
             {t.subtitle}
           </p>
         </div>

@@ -25,19 +25,22 @@ export const ProjectsGallery: React.FC<ProjectsGalleryProps> = ({ currentLang, o
     : portfolioProjects.filter((p) => p.category === selectedCategory);
 
   return (
-    <section id="projets" className="py-20 lg:py-28 bg-slate-950 relative">
+    <section id="projets" className="py-20 lg:py-28 relative" style={{ backgroundColor: 'var(--bg-base)' }}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
           <div className="space-y-3 max-w-2xl">
-            <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-slate-900 border border-slate-800 text-emerald-400 text-xs font-bold uppercase tracking-wider">
+            <div
+              className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full text-emerald-400 text-xs font-bold uppercase tracking-wider border"
+              style={{ backgroundColor: 'var(--bg-card)', borderColor: 'var(--border)' }}
+            >
               <FolderKanban className="w-3.5 h-3.5" />
               <span>{t.badge}</span>
             </div>
-            <h2 className="text-2xl sm:text-4xl font-extrabold text-white tracking-tight">
+            <h2 className="text-2xl sm:text-4xl font-extrabold tracking-tight" style={{ color: 'var(--text-primary)' }}>
               {t.title}
             </h2>
-            <p className="text-xs sm:text-sm text-slate-400">
+            <p className="text-xs sm:text-sm" style={{ color: 'var(--text-muted)' }}>
               {t.subtitle}
             </p>
           </div>
@@ -51,11 +54,11 @@ export const ProjectsGallery: React.FC<ProjectsGalleryProps> = ({ currentLang, o
                 <button
                   key={c.id}
                   onClick={() => setSelectedCategory(c.id)}
-                  className={`px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${
-                    isActive
-                      ? 'bg-[#3B7A2C] text-white shadow-md'
-                      : 'bg-slate-900 border border-slate-800 text-slate-400 hover:text-slate-200 hover:bg-slate-800'
-                  }`}
+                  className="px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer border"
+                  style={isActive
+                    ? { backgroundColor: '#3B7A2C', color: 'white', borderColor: '#3B7A2C' }
+                    : { backgroundColor: 'var(--bg-card)', borderColor: 'var(--border)', color: 'var(--text-muted)' }
+                  }
                 >
                   {label}
                 </button>
@@ -73,7 +76,8 @@ export const ProjectsGallery: React.FC<ProjectsGalleryProps> = ({ currentLang, o
             return (
               <div
                 key={p.id}
-                className="rounded-3xl bg-slate-900/90 border border-slate-800 hover:border-emerald-500/50 transition-all duration-300 overflow-hidden flex flex-col group shadow-xl"
+                className="rounded-3xl border hover:border-emerald-500/50 transition-all duration-300 overflow-hidden flex flex-col group shadow-xl"
+                style={{ backgroundColor: 'var(--bg-surface)', borderColor: 'var(--border)' }}
               >
                 {/* Image */}
                 <div className="relative h-56 overflow-hidden">
@@ -92,7 +96,7 @@ export const ProjectsGallery: React.FC<ProjectsGalleryProps> = ({ currentLang, o
                 {/* Details */}
                 <div className="p-6 flex-1 flex flex-col justify-between space-y-4">
                   <div className="space-y-2">
-                    <div className="flex items-center gap-2 text-[11px] text-slate-400">
+                    <div className="flex items-center gap-2 text-[11px]" style={{ color: 'var(--text-muted)' }}>
                       <MapPin className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
                       <span className="truncate">{p.location}</span>
                       <span>•</span>
@@ -100,20 +104,23 @@ export const ProjectsGallery: React.FC<ProjectsGalleryProps> = ({ currentLang, o
                       <span>{p.year}</span>
                     </div>
 
-                    <h3 className="text-base font-bold text-white group-hover:text-emerald-400 transition-colors leading-snug">
+                    <h3 className="text-base font-bold group-hover:text-emerald-400 transition-colors leading-snug" style={{ color: 'var(--text-primary)' }}>
                       {title}
                     </h3>
 
-                    <p className="text-xs text-slate-400 line-clamp-3 leading-relaxed">
+                    <p className="text-xs line-clamp-3 leading-relaxed" style={{ color: 'var(--text-muted)' }}>
                       {desc}
                     </p>
                   </div>
 
-                  <div className="pt-4 border-t border-slate-800 flex items-center justify-between text-xs">
-                    <span className="text-slate-400 font-medium">Client : <strong className="text-slate-200">{p.client}</strong></span>
+                  <div className="pt-4 flex items-center justify-between text-xs" style={{ borderTop: `1px solid var(--border)` }}>
+                    <span style={{ color: 'var(--text-muted)' }}>
+                      Client : <strong style={{ color: 'var(--text-secondary)' }}>{p.client}</strong>
+                    </span>
                     <button
                       onClick={onOpenQuoteModal}
-                      className="p-2 rounded-xl bg-slate-800 group-hover:bg-[#3B7A2C] text-slate-300 group-hover:text-white transition-colors cursor-pointer"
+                      className="p-2 rounded-xl group-hover:bg-[#3B7A2C] group-hover:text-white transition-colors cursor-pointer border"
+                      style={{ backgroundColor: 'var(--bg-card)', color: 'var(--text-muted)', borderColor: 'var(--border)' }}
                       title="Projet similaire ? Demandez un devis"
                     >
                       <ArrowUpRight className="w-4 h-4" />

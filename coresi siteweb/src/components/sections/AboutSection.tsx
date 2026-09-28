@@ -17,12 +17,16 @@ export const AboutSection: React.FC<AboutSectionProps> = ({ currentLang }) => {
   ];
 
   return (
-    <section id="a-propos" className="py-20 lg:py-28 bg-slate-900/60 border-t border-b border-slate-800/80 relative">
+    <section
+      id="a-propos"
+      className="py-20 lg:py-28 relative"
+      style={{ backgroundColor: 'var(--bg-surface)', borderTop: `1px solid var(--border)`, borderBottom: `1px solid var(--border)` }}
+    >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
           {/* Left Visual Column */}
           <div className="lg:col-span-5 relative">
-            <div className="relative rounded-3xl overflow-hidden shadow-2xl border-2 border-slate-800">
+            <div className="relative rounded-3xl overflow-hidden shadow-2xl" style={{ border: `2px solid var(--border-light)` }}>
               <img
                 src="/images/services/welding_workshop.jpg"
                 alt="Ateliers de Chaudronnerie & Soudure CORESI"
@@ -50,40 +54,47 @@ export const AboutSection: React.FC<AboutSectionProps> = ({ currentLang }) => {
 
           {/* Right Content Column */}
           <div className="lg:col-span-7 space-y-6">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-800 text-emerald-400 text-xs font-bold uppercase tracking-wider border border-slate-700">
+            <div
+              className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-emerald-400 text-xs font-bold uppercase tracking-wider border"
+              style={{ backgroundColor: 'var(--bg-card)', borderColor: 'var(--border-light)' }}
+            >
               <span>{t.badge}</span>
             </div>
 
-            <h2 className="text-2xl sm:text-4xl font-extrabold text-white tracking-tight leading-tight">
+            <h2 className="text-2xl sm:text-4xl font-extrabold tracking-tight leading-tight" style={{ color: 'var(--text-primary)' }}>
               {t.title} <span className="text-[#4FA33B]">{t.highlight}</span>
             </h2>
 
-            <div className="space-y-4 text-sm sm:text-base text-slate-300 leading-relaxed font-normal">
+            <div className="space-y-4 text-sm sm:text-base leading-relaxed font-normal" style={{ color: 'var(--text-muted)' }}>
               <p>{t.text1}</p>
               <p>{t.text2}</p>
-              <p className="text-slate-400 text-xs sm:text-sm">{t.text3}</p>
+              <p className="text-xs sm:text-sm" style={{ color: 'var(--text-subtle)' }}>{t.text3}</p>
             </div>
 
             {/* 4 Values Cards Grid */}
             <div className="pt-4">
-              <h3 className="text-sm font-bold text-slate-200 uppercase tracking-wider mb-4">
+              <h3 className="text-sm font-bold uppercase tracking-wider mb-4" style={{ color: 'var(--text-secondary)' }}>
                 {t.coreValuesTitle}
               </h3>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 {t.values.map((v, idx) => (
                   <div
                     key={idx}
-                    className="p-4 rounded-2xl bg-slate-950/80 border border-slate-800 hover:border-emerald-500/40 transition-colors space-y-2 group"
+                    className="p-4 rounded-2xl border hover:border-emerald-500/40 transition-colors space-y-2 group"
+                    style={{ backgroundColor: 'var(--bg-base)', borderColor: 'var(--border)' }}
                   >
                     <div className="flex items-center gap-3">
-                      <div className="p-2 rounded-xl bg-slate-900 border border-slate-800 group-hover:border-emerald-500/30 transition-colors">
+                      <div
+                        className="p-2 rounded-xl border group-hover:border-emerald-500/30 transition-colors"
+                        style={{ backgroundColor: 'var(--bg-surface)', borderColor: 'var(--border)' }}
+                      >
                         {valueIcons[idx % valueIcons.length]}
                       </div>
-                      <h4 className="text-xs sm:text-sm font-bold text-white group-hover:text-emerald-300 transition-colors">
+                      <h4 className="text-xs sm:text-sm font-bold group-hover:text-emerald-300 transition-colors" style={{ color: 'var(--text-primary)' }}>
                         {v.title}
                       </h4>
                     </div>
-                    <p className="text-xs text-slate-400 leading-relaxed pl-1">
+                    <p className="text-xs leading-relaxed pl-1" style={{ color: 'var(--text-muted)' }}>
                       {v.desc}
                     </p>
                   </div>

@@ -11,18 +11,25 @@ export const ProductsSection: React.FC<ProductsSectionProps> = ({ currentLang, o
   const t = translations[currentLang].products;
 
   return (
-    <section id="produits" className="py-20 lg:py-28 bg-slate-900/40 border-t border-b border-slate-800/80 relative">
+    <section
+      id="produits"
+      className="py-20 lg:py-28 relative"
+      style={{ backgroundColor: 'var(--bg-surface)', borderTop: `1px solid var(--border)`, borderBottom: `1px solid var(--border)` }}
+    >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto space-y-3 mb-16">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-slate-800 border border-slate-700 text-amber-400 text-xs font-bold uppercase tracking-wider">
+          <div
+            className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full text-amber-400 text-xs font-bold uppercase tracking-wider border"
+            style={{ backgroundColor: 'var(--bg-card)', borderColor: 'var(--border-light)' }}
+          >
             <Package className="w-3.5 h-3.5" />
             <span>{t.badge}</span>
           </div>
-          <h2 className="text-2xl sm:text-4xl font-extrabold text-white tracking-tight">
+          <h2 className="text-2xl sm:text-4xl font-extrabold tracking-tight" style={{ color: 'var(--text-primary)' }}>
             {t.title}
           </h2>
-          <p className="text-xs sm:text-sm text-slate-400 leading-relaxed">
+          <p className="text-xs sm:text-sm leading-relaxed" style={{ color: 'var(--text-muted)' }}>
             {t.subtitle}
           </p>
         </div>
@@ -32,11 +39,12 @@ export const ProductsSection: React.FC<ProductsSectionProps> = ({ currentLang, o
           {t.items.map((prod) => (
             <div
               key={prod.id}
-              className="rounded-3xl glass-panel border border-slate-800 hover:border-amber-500/40 transition-all duration-300 p-6 flex flex-col justify-between space-y-6 group shadow-xl"
+              className="glass-panel rounded-3xl border hover:border-amber-500/40 transition-all duration-300 p-6 flex flex-col justify-between space-y-6 group shadow-xl"
+              style={{ borderColor: 'var(--border)' }}
             >
               <div className="space-y-4">
                 {/* Image Showcase */}
-                <div className="relative h-48 sm:h-52 rounded-2xl overflow-hidden border border-slate-800">
+                <div className="relative h-48 sm:h-52 rounded-2xl overflow-hidden border" style={{ borderColor: 'var(--border)' }}>
                   <img
                     src={prod.image}
                     alt={prod.title}
@@ -48,22 +56,25 @@ export const ProductsSection: React.FC<ProductsSectionProps> = ({ currentLang, o
                 </div>
 
                 <div>
-                  <h3 className="text-lg font-bold text-white group-hover:text-amber-400 transition-colors">
+                  <h3 className="text-lg font-bold group-hover:text-amber-400 transition-colors" style={{ color: 'var(--text-primary)' }}>
                     {prod.title}
                   </h3>
-                  <p className="text-xs text-slate-400 mt-2 leading-relaxed">
+                  <p className="text-xs mt-2 leading-relaxed" style={{ color: 'var(--text-muted)' }}>
                     {prod.desc}
                   </p>
                 </div>
 
                 {/* Specs List */}
-                <div className="p-4 rounded-2xl bg-slate-950/70 border border-slate-800/80 space-y-2.5">
-                  <h4 className="text-[11px] font-bold text-slate-300 uppercase tracking-wider flex items-center gap-1.5">
+                <div
+                  className="p-4 rounded-2xl border space-y-2.5"
+                  style={{ backgroundColor: 'var(--bg-base)', borderColor: 'var(--border)' }}
+                >
+                  <h4 className="text-[11px] font-bold uppercase tracking-wider flex items-center gap-1.5" style={{ color: 'var(--text-secondary)' }}>
                     <Zap className="w-3.5 h-3.5 text-amber-400" />
                     <span>Spécifications Clés</span>
                   </h4>
                   {prod.specs.map((sp, i) => (
-                    <div key={i} className="flex items-start gap-2 text-xs text-slate-300">
+                    <div key={i} className="flex items-start gap-2 text-xs" style={{ color: 'var(--text-secondary)' }}>
                       <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400 shrink-0 mt-0.5" />
                       <span className="leading-snug">{sp}</span>
                     </div>
@@ -74,7 +85,8 @@ export const ProductsSection: React.FC<ProductsSectionProps> = ({ currentLang, o
               {/* Action Button */}
               <button
                 onClick={onOpenQuoteModal}
-                className="w-full py-3 rounded-xl bg-slate-800 hover:bg-amber-600 hover:text-slate-950 text-slate-200 text-xs font-bold transition-all duration-200 flex items-center justify-center gap-2 cursor-pointer shadow-md"
+                className="w-full py-3 rounded-xl hover:bg-amber-600 hover:text-slate-950 text-xs font-bold transition-all duration-200 flex items-center justify-center gap-2 cursor-pointer shadow-md border"
+                style={{ backgroundColor: 'var(--bg-card)', color: 'var(--text-secondary)', borderColor: 'var(--border)' }}
               >
                 <FileText className="w-4 h-4" />
                 <span>Demander une Fiche Technique &amp; Prix</span>

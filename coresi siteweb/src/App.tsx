@@ -31,7 +31,7 @@ export const App: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-100 flex flex-col font-sans selection:bg-[#3B7A2C] selection:text-white">
+    <div className="min-h-screen flex flex-col font-sans selection:bg-[#3B7A2C] selection:text-white" style={{ backgroundColor: 'var(--bg-base)', color: 'var(--text-primary)' }}>
       {/* Sticky Header */}
       <Navbar
         currentLang={currentLang}
