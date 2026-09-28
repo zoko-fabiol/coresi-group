@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Anchor, Sparkles } from 'lucide-react';
+import { CheckCircle2 } from 'lucide-react';
 
 interface NavalLoaderProps {
   onLoaded?: () => void;
@@ -8,30 +8,73 @@ interface NavalLoaderProps {
 
 export const NavalLoader: React.FC<NavalLoaderProps> = ({ 
   onLoaded, 
-  minDuration = 2400 
+  minDuration = 2800 
 }) => {
   const [progress, setProgress] = useState(0);
   const [isFadingOut, setIsFadingOut] = useState(false);
   const [isDone, setIsDone] = useState(false);
+  const [isLightMode, setIsLightMode] = useState<boolean>(() => {
+    if (typeof window !== 'undefined' && window.matchMedia) {
+      return window.matchMedia('(prefers-color-scheme: light)').matches;
+    }
+    return false;
+  });
 
-  // Stepped technical status message in French / Naval Engineering jargon
-  const getStatusText = (prog: number) => {
-    if (prog < 22) return 'Initialisation du chantier naval & modélisation 3D...';
-    if (prog < 50) return 'Érection de la coque & soudage des membrures...';
-    if (prog < 78) return 'Assemblage des blocs & chaudronnerie certifiée ASME...';
-    if (prog < 96) return 'Contrôle non-destructif (CND) & vérification d\'étanchéité...';
-    return 'Chantier naval prêt • Lancement du site...';
+  // Listen to system theme changes in real-time
+  useEffect(() => {
+    if (typeof window === 'undefined' || !window.matchMedia) return;
+    const mql = window.matchMedia('(prefers-color-scheme: light)');
+    const handler = (e: MediaQueryListEvent) => setIsLightMode(e.matches);
+    mql.addEventListener('change', handler);
+    return () => mql.removeEventListener('change', handler);
+  }, []);
+
+  // 5 Real Progressive Construction Stages from A to Z
+  const getStageInfo = (prog: number) => {
+    if (prog < 22) {
+      return {
+        step: '1/5',
+        title: 'Pose de la quille & tins de calage',
+        desc: 'Fondation du navire en cale sèche...',
+      };
+    }
+    if (prog < 45) {
+      return {
+        step: '2/5',
+        title: 'Érection des couples & membrures',
+        desc: 'Assemblage de l\'ossature métallique...',
+      };
+    }
+    if (prog < 70) {
+      return {
+        step: '3/5',
+        title: 'Pose du bordé & soudure de coque',
+        desc: 'Fermeture et étanchéité de la structure...',
+      };
+    }
+    if (prog < 90) {
+      return {
+        step: '4/5',
+        title: 'Pose du pont & passerelle de commandement',
+        desc: 'Installation de la superstructure & des apparaux...',
+      };
+    }
+    return {
+      step: '5/5',
+      title: 'Mise en eau & navire opérationnel',
+      desc: 'Contrôles validés • Lancement immédiat !',
+    };
   };
 
   useEffect(() => {
     const startTime = Date.now();
-    const intervalTime = 25; // Update every 25ms for silky-smooth progress
+    const intervalTime = 30;
     
     const interval = setInterval(() => {
       const elapsed = Date.now() - startTime;
-      const calculatedProgress = Math.min(100, Math.floor((elapsed / minDuration) * 100));
+      const currentProg = Math.min(100, Math.floor((elapsed / minDuration) * 100));
       
-      setProgress(calculatedProgress);
+      setProgress(currentProg);
 
       if (elapsed >= minDuration) {
         clearInterval(interval);
@@ -41,8 +84,8 @@ export const NavalLoader: React.FC<NavalLoaderProps> = ({
           setTimeout(() => {
             setIsDone(true);
             if (onLoaded) onLoaded();
-          }, 650); // wait for CSS fade-out transition
-        }, 250);
+          }, 600);
+        }, 300);
       }
     }, intervalTime);
 
@@ -51,267 +94,392 @@ export const NavalLoader: React.FC<NavalLoaderProps> = ({
 
   if (isDone) return null;
 
+  const currentStage = getStageInfo(progress);
+
+  // Dynamic Theme Colors
+  const theme = {
+    bg: isLightMode ? '#f8fafc' : '#020617',
+    cardBg: isLightMode ? '#ffffff' : '#0f172a',
+    cardBorder: isLightMode ? '#e2e8f0' : '#1e293b',
+    dockWall: isLightMode ? '#cbd5e1' : '#334155',
+    blocks: isLightMode ? '#94a3b8' : '#475569',
+    gridLines: isLightMode ? 'rgba(0, 0, 0, 0.04)' : 'rgba(255, 255, 255, 0.05)',
+    textPrimary: isLightMode ? '#0f172a' : '#f8fafc',
+    textSecondary: isLightMode ? '#334155' : '#cbd5e1',
+    textMuted: isLightMode ? '#64748b' : '#94a3b8',
+    waterColor: isLightMode ? 'rgba(14, 165, 233, 0.55)' : 'rgba(2, 132, 199, 0.65)',
+    waterLine: isLightMode ? '#0284c7' : '#38bdf8',
+    hullOutline: isLightMode ? '#1e293b' : '#3B7A2C',
+    hullFill: isLightMode ? '#334155' : '#1e293b',
+    superstructure: isLightMode ? '#e2e8f0' : '#0f172a',
+    craneColor: isLightMode ? '#d97706' : '#f59e0b',
+  };
+
+  // Progressive construction variables based on %
+  // 1. Keel length (0 to 180)
+  const keelLength = Math.min(260, Math.max(0, (progress / 20) * 260));
+  // 2. Ribs count (0 to 8 ribs)
+  const ribsCount = progress >= 20 ? Math.min(8, Math.floor(((progress - 20) / 25) * 8)) : 0;
+  // 3. Hull plating opacity (0 to 1 during 45% - 70%)
+  const hullOpacity = progress >= 45 ? Math.min(1, (progress - 45) / 20) : 0;
+  // 4. Superstructure lowering translateY (starts at -40, lands at 0 during 70% - 88%)
+  const superstructureY = progress < 70 ? -50 : Math.max(0, (1 - (progress - 70) / 18) * 50);
+  const superstructureOpacity = progress >= 70 ? Math.min(1, (progress - 70) / 10) : 0;
+  // 5. Water level rising (during 88% - 100%)
+  const waterProgress = progress >= 85 ? Math.min(1, (progress - 85) / 15) : 0;
+
   return (
     <div
-      className={`fixed inset-0 z-[9999] flex flex-col items-center justify-center bg-[#020617] text-white select-none transition-all duration-700 ease-out ${
+      style={{ backgroundColor: theme.bg }}
+      className={`fixed inset-0 z-[9999] flex flex-col items-center justify-center select-none transition-all duration-700 ease-out px-4 ${
         isFadingOut ? 'opacity-0 scale-105 pointer-events-none' : 'opacity-100 scale-100'
       }`}
     >
-      {/* Background blueprint grid with subtle animated radial glow */}
-      <div className="absolute inset-0 bg-[radial-gradient(#3B7A2C_1px,transparent_1px)] [background-size:28px_28px] opacity-20 pointer-events-none" />
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-emerald-900/15 rounded-full blur-[130px] pointer-events-none" />
+      {/* Background blueprint tech pattern */}
+      <div 
+        className="absolute inset-0 pointer-events-none opacity-40"
+        style={{
+          backgroundImage: `radial-gradient(${isLightMode ? '#cbd5e1' : '#1e293b'} 1px, transparent 1px)`,
+          backgroundSize: '24px 24px',
+        }}
+      />
 
-      {/* Top Coordinate Header (High-tech shipyard vibe) */}
-      <div className="absolute top-6 left-6 right-6 flex items-center justify-between text-[11px] font-mono text-slate-500 tracking-wider">
+      {/* Top Header Badge */}
+      <div className="absolute top-5 left-5 right-5 flex items-center justify-between text-xs font-mono">
         <div className="flex items-center gap-2">
-          <span className="w-2 h-2 rounded-full bg-emerald-500 animate-ping" />
-          <span className="text-emerald-400 font-bold">CORESI NAVAL DOCK</span>
-          <span className="hidden sm:inline text-slate-600">|</span>
-          <span className="hidden sm:inline">DOUALA &amp; KRIBI</span>
-        </div>
-        <div className="flex items-center gap-3">
-          <span className="hidden sm:inline text-slate-600">NORMES : ASME IX • ISO 9606</span>
-          <span className="px-2 py-0.5 rounded bg-emerald-950/80 border border-emerald-500/30 text-emerald-400 text-[10px] font-bold">
-            SYS: ACTIVE
+          <span className="w-2.5 h-2.5 rounded-full bg-[#3B7A2C] animate-pulse" />
+          <span className="font-bold tracking-wider" style={{ color: theme.textSecondary }}>
+            CHANTIER NAVAL CORESI
           </span>
+          <span className="hidden sm:inline" style={{ color: theme.textMuted }}>| DOUALA • KRIBI</span>
+        </div>
+        <div className="px-2.5 py-1 rounded-full text-[11px] font-bold border"
+          style={{ 
+            backgroundColor: isLightMode ? '#f1f5f9' : '#0f172a',
+            borderColor: theme.cardBorder,
+            color: '#3B7A2C'
+          }}
+        >
+          {isLightMode ? 'MODE CLAIR' : 'MODE SOMBRE'}
         </div>
       </div>
 
-      <div className="relative z-10 w-full max-w-lg px-6 flex flex-col items-center text-center">
-        {/* 1. LOGO DE L'ENTREPRISE (Au-dessus) */}
-        <div className="mb-6 transform transition-transform hover:scale-105">
-          <div className="bg-white/95 rounded-2xl p-2.5 px-4 shadow-2xl shadow-emerald-950/60 border border-white/20 inline-flex items-center justify-center">
+      <div className="relative z-10 w-full max-w-lg flex flex-col items-center text-center">
+        {/* 1. LOGO DE L'ENTREPRISE AU-DESSUS */}
+        <div className="mb-5 flex flex-col items-center">
+          <div 
+            className="p-2.5 px-5 rounded-2xl shadow-lg border inline-flex items-center justify-center transition-transform"
+            style={{ 
+              backgroundColor: isLightMode ? '#ffffff' : '#0f172a',
+              borderColor: theme.cardBorder,
+              boxShadow: isLightMode ? '0 10px 25px -5px rgba(0,0,0,0.08)' : '0 10px 30px -5px rgba(0,0,0,0.5)'
+            }}
+          >
             <img
               src="/images/logo/coresi_logo.png"
-              alt="CORESI International Logo"
-              className="h-12 sm:h-14 w-auto object-contain filter drop-shadow-sm"
+              alt="CORESI International"
+              className="h-10 sm:h-12 w-auto object-contain"
             />
           </div>
-          <div className="mt-2.5 flex items-center justify-center gap-2 text-xs font-bold tracking-widest text-slate-300 uppercase">
-            <span>CORESI</span>
-            <span className="text-[#3B7A2C]">•</span>
-            <span className="text-emerald-400">PÔLE NAVAL &amp; OFFSHORE</span>
-          </div>
+          <p className="mt-2 text-[11px] font-bold tracking-widest uppercase font-mono" style={{ color: theme.textMuted }}>
+            Ingénierie Métallique &amp; Construction Navale
+          </p>
         </div>
 
-        {/* 2. ANIMATION DE CONSTRUCTION NAVALE (Juste en bas du logo) */}
-        <div className="relative w-full max-w-md h-52 sm:h-60 rounded-3xl bg-slate-950/70 border border-emerald-500/30 p-4 shadow-2xl backdrop-blur-xl overflow-hidden mb-6 flex items-center justify-center">
-          {/* Blueprint Crosshairs & Grid inside animation box */}
-          <div className="absolute inset-0 bg-[linear-gradient(to_right,#1e293b_1px,transparent_1px),linear-gradient(to_bottom,#1e293b_1px,transparent_1px)] bg-[size:16px_16px] opacity-25" />
-          
-          {/* Top Drydock Gantry Rail */}
-          <div className="absolute top-3 left-4 right-4 h-1.5 bg-slate-800 rounded flex items-center justify-between px-1">
-            <div className="w-1.5 h-3 bg-amber-400 rounded-sm" />
-            <div className="w-1.5 h-3 bg-amber-400 rounded-sm" />
-          </div>
+        {/* 2. ANIMATION PROGRESSIVE DU BATEAU (CONSTRUCTION DE A à Z) */}
+        <div 
+          className="relative w-full max-w-md h-56 sm:h-64 rounded-3xl border p-4 shadow-xl overflow-hidden mb-5 flex flex-col items-center justify-center"
+          style={{ 
+            backgroundColor: theme.cardBg,
+            borderColor: theme.cardBorder,
+            boxShadow: isLightMode ? '0 15px 35px -10px rgba(0,0,0,0.08)' : '0 20px 40px -15px rgba(0,0,0,0.7)'
+          }}
+        >
+          {/* Internal Blueprint Grid */}
+          <div 
+            className="absolute inset-0 pointer-events-none"
+            style={{
+              backgroundImage: `linear-gradient(to right, ${theme.gridLines} 1px, transparent 1px), linear-gradient(to bottom, ${theme.gridLines} 1px, transparent 1px)`,
+              backgroundSize: '20px 20px',
+            }}
+          />
 
-          {/* SVG DOCK & SHIP CONSTRUCTION ANIMATION */}
-          <svg
-            viewBox="0 0 400 220"
-            className="w-full h-full relative z-10 filter drop-shadow-[0_0_15px_rgba(59,122,44,0.3)]"
-          >
+          {/* SVG Canvas for Ship Construction */}
+          <svg viewBox="0 0 400 220" className="w-full h-full relative z-10">
             <defs>
-              {/* Ship Hull Gradient */}
-              <linearGradient id="hullGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" stopColor="#1e293b" />
-                <stop offset="50%" stopColor="#0f172a" />
-                <stop offset="100%" stopColor="#020617" />
+              <linearGradient id="shipHullGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+                <stop offset="0%" stopColor={isLightMode ? '#475569' : '#1e293b'} />
+                <stop offset="85%" stopColor={isLightMode ? '#1e293b' : '#0f172a'} />
+                <stop offset="85%" stopColor="#dc2626" /> {/* Red bottom hull antifouling paint */}
+                <stop offset="100%" stopColor="#b91c1c" />
               </linearGradient>
 
-              {/* Laser Scan Gradient */}
-              <linearGradient id="laserGrad" x1="0%" y1="0%" x2="0%" y2="100%">
-                <stop offset="0%" stopColor="transparent" />
-                <stop offset="50%" stopColor="#10b981" stopOpacity="0.8" />
-                <stop offset="100%" stopColor="transparent" />
-              </linearGradient>
-
-              {/* Water Gradient */}
-              <linearGradient id="waterGrad" x1="0%" y1="0%" x2="0%" y2="100%">
-                <stop offset="0%" stopColor="#0284c7" stopOpacity="0.6" />
-                <stop offset="100%" stopColor="#0369a1" stopOpacity="0.1" />
+              <linearGradient id="waterFlow" x1="0%" y1="0%" x2="0%" y2="100%">
+                <stop offset="0%" stopColor={theme.waterColor} />
+                <stop offset="100%" stopColor={isLightMode ? 'rgba(2, 132, 199, 0.25)' : 'rgba(2, 6, 23, 0.4)'} />
               </linearGradient>
             </defs>
 
-            {/* Drydock Wall Foundations (Cale sèche) */}
+            {/* Drydock Structure (Cale sèche) */}
             <path
-              d="M 20 180 L 50 195 L 350 195 L 380 180"
+              d="M 25 185 L 55 198 L 345 198 L 375 185"
               fill="none"
-              stroke="#334155"
-              strokeWidth="3"
-              strokeDasharray="4 4"
-            />
-            {/* Dock Keel Blocks (Tins de calage) */}
-            <rect x="90" y="185" width="16" height="10" fill="#475569" rx="1" />
-            <rect x="150" y="185" width="16" height="10" fill="#475569" rx="1" />
-            <rect x="210" y="185" width="16" height="10" fill="#475569" rx="1" />
-            <rect x="270" y="185" width="16" height="10" fill="#475569" rx="1" />
-
-            {/* SHIP HULL (COQUE DU NAVIRE EN CONSTRUCTION) */}
-            {/* Keel & Base Plate */}
-            <path
-              d="M 70 180 Q 200 185 330 180"
-              stroke="#3B7A2C"
-              strokeWidth="4"
-              fill="none"
-            />
-
-            {/* Main Hull Body Silhouette */}
-            <path
-              d="M 60 115 
-                 C 70 145, 90 175, 120 180 
-                 L 280 180 
-                 C 320 175, 345 150, 355 105 
-                 L 350 95 
-                 L 55 100 
-                 Z"
-              fill="url(#hullGrad)"
-              stroke="#4FA33B"
+              stroke={theme.dockWall}
               strokeWidth="2.5"
             />
+            {/* Dock Keel Blocks (Tins de calage) */}
+            {[80, 130, 180, 230, 280, 320].map((x, i) => (
+              <rect key={i} x={x} y="190" width="14" height="8" rx="1" fill={theme.blocks} />
+            ))}
 
-            {/* Bulbous Bow (Bulbe d'étrave sous-marin) */}
-            <ellipse cx="55" cy="170" rx="14" ry="9" fill="#1e293b" stroke="#3B7A2C" strokeWidth="2" />
-
-            {/* Naval Structural Ribs / Membrures de Chaudronnerie Navale */}
-            <g stroke="#38bdf8" strokeWidth="1" strokeDasharray="2 3" opacity="0.6">
-              <line x1="110" y1="110" x2="110" y2="180" />
-              <line x1="140" y1="108" x2="140" y2="180" />
-              <line x1="170" y1="105" x2="170" y2="180" />
-              <line x1="200" y1="105" x2="200" y2="180" />
-              <line x1="230" y1="105" x2="230" y2="180" />
-              <line x1="260" y1="107" x2="260" y2="180" />
-              <line x1="290" y1="110" x2="290" y2="180" />
-              <line x1="320" y1="115" x2="320" y2="170" />
-            </g>
-
-            {/* Deck & Superstructure (Château / Passerelle de commandement) */}
-            <rect x="235" y="70" width="70" height="30" fill="#0f172a" stroke="#22c55e" strokeWidth="1.5" rx="3" />
-            <rect x="250" y="52" width="40" height="18" fill="#1e293b" stroke="#22c55e" strokeWidth="1.5" rx="2" />
-            {/* Navigation Radar Mast */}
-            <line x1="270" y1="36" x2="270" y2="52" stroke="#e2e8f0" strokeWidth="2" />
-            <line x1="262" y1="40" x2="278" y2="40" stroke="#38bdf8" strokeWidth="2" />
-            {/* Animated Rotating Radar Scan */}
-            <circle cx="270" cy="38" r="3" fill="#22c55e" className="animate-ping" />
-
-            {/* Cargo Holds / Écoutilles de pont */}
-            <rect x="85" y="96" width="35" height="6" fill="#334155" stroke="#3B7A2C" strokeWidth="1" rx="1" />
-            <rect x="135" y="96" width="35" height="6" fill="#334155" stroke="#3B7A2C" strokeWidth="1" rx="1" />
-            <rect x="185" y="96" width="35" height="6" fill="#334155" stroke="#3B7A2C" strokeWidth="1" rx="1" />
-
-            {/* SHIPYARD PORTAL CRANE (GRUE PORTIQUE DU CHANTIER NAVAL) */}
-            <g className="animate-pulse" style={{ animationDuration: '3s' }}>
-              {/* Vertical Crane Pylon */}
-              <path d="M 40 180 L 50 30 L 65 30 L 70 180" stroke="#f59e0b" strokeWidth="2" fill="none" opacity="0.8" />
-              {/* Crane Boom / Flèche */}
-              <line x1="35" y1="35" x2="220" y2="35" stroke="#f59e0b" strokeWidth="3" />
-              <line x1="45" y1="45" x2="210" y2="35" stroke="#f59e0b" strokeWidth="1.5" opacity="0.6" />
-              {/* Crane Counterweight */}
-              <rect x="25" y="28" width="18" height="14" fill="#d97706" rx="2" />
-
-              {/* Crane Trolley with Steel Cable */}
-              <rect x="150" y="32" width="12" height="7" fill="#fbbf24" rx="1" />
-              <line x1="156" y1="39" x2="156" y2="85" stroke="#94a3b8" strokeWidth="1.5" strokeDasharray="3 2" />
-
-              {/* Lifted Steel Block (Bloc de coque suspendu en pose) */}
-              <g transform="translate(142, 85)">
-                <rect x="0" y="0" width="28" height="15" fill="#3B7A2C" stroke="#4ade80" strokeWidth="1.5" rx="2" />
-                <line x1="0" y1="7" x2="28" y2="7" stroke="#15803d" strokeWidth="1" />
+            {/* ÉTAPE 1 : POSE DE LA QUILLE (0% - 22%) */}
+            {progress > 2 && (
+              <g>
+                {/* Horizontal Keel Beam */}
+                <line
+                  x1="70"
+                  y1="188"
+                  x2={70 + keelLength}
+                  y2="188"
+                  stroke="#3B7A2C"
+                  strokeWidth="5"
+                  strokeLinecap="round"
+                />
+                {/* Bulbous Bow Base Circle */}
+                {keelLength > 240 && (
+                  <ellipse cx="65" cy="180" rx="10" ry="7" fill={theme.blocks} stroke="#3B7A2C" strokeWidth="2" />
+                )}
               </g>
-            </g>
+            )}
 
-            {/* WELDING ARC & SPARKS EFFECT (ÉTINCELLES DE SOUDURE NAVALE) */}
-            {/* Welding Arc 1: Joint de coque avant */}
-            <g transform="translate(170, 102)">
-              {/* Bright Flash */}
-              <circle cx="0" cy="0" r="7" fill="#38bdf8" className="animate-ping" opacity="0.75" />
-              <circle cx="0" cy="0" r="3" fill="#ffffff" />
-              {/* Sparks popping */}
-              <line x1="0" y1="0" x2="-8" y2="-10" stroke="#fef08a" strokeWidth="1.5" className="animate-pulse" />
-              <line x1="0" y1="0" x2="7" y2="-8" stroke="#fde047" strokeWidth="1.5" className="animate-pulse" />
-              <line x1="0" y1="0" x2="9" y2="6" stroke="#67e8f9" strokeWidth="1" className="animate-pulse" />
-              <line x1="0" y1="0" x2="-6" y2="7" stroke="#facc15" strokeWidth="1.2" className="animate-pulse" />
-            </g>
+            {/* ÉTAPE 2 : ÉRECTION DES COUPLES & MEMBRURES (20% - 45%) */}
+            {/* Ribs rise up one by one */}
+            {ribsCount >= 1 && (
+              <path d="M 105 188 Q 100 150 110 115" stroke="#0284c7" strokeWidth="2.5" strokeDasharray="3 2" fill="none" />
+            )}
+            {ribsCount >= 2 && (
+              <path d="M 135 188 Q 130 148 140 112" stroke="#0284c7" strokeWidth="2.5" strokeDasharray="3 2" fill="none" />
+            )}
+            {ribsCount >= 3 && (
+              <path d="M 165 188 Q 160 145 170 110" stroke="#0284c7" strokeWidth="2.5" strokeDasharray="3 2" fill="none" />
+            )}
+            {ribsCount >= 4 && (
+              <path d="M 195 188 Q 190 145 200 110" stroke="#0284c7" strokeWidth="2.5" strokeDasharray="3 2" fill="none" />
+            )}
+            {ribsCount >= 5 && (
+              <path d="M 225 188 Q 220 145 230 110" stroke="#0284c7" strokeWidth="2.5" strokeDasharray="3 2" fill="none" />
+            )}
+            {ribsCount >= 6 && (
+              <path d="M 255 188 Q 250 146 260 110" stroke="#0284c7" strokeWidth="2.5" strokeDasharray="3 2" fill="none" />
+            )}
+            {ribsCount >= 7 && (
+              <path d="M 285 188 Q 280 148 290 112" stroke="#0284c7" strokeWidth="2.5" strokeDasharray="3 2" fill="none" />
+            )}
+            {ribsCount >= 8 && (
+              <path d="M 315 188 Q 312 150 320 115" stroke="#0284c7" strokeWidth="2.5" strokeDasharray="3 2" fill="none" />
+            )}
 
-            {/* Welding Arc 2: Membrure arrière */}
-            <g transform="translate(290, 115)">
-              <circle cx="0" cy="0" r="5" fill="#38bdf8" className="animate-ping" style={{ animationDelay: '0.4s' }} opacity="0.7" />
-              <circle cx="0" cy="0" r="2.5" fill="#ffffff" />
-              <line x1="0" y1="0" x2="6" y2="-7" stroke="#fde047" strokeWidth="1.2" className="animate-pulse" />
-              <line x1="0" y1="0" x2="-6" y2="-6" stroke="#67e8f9" strokeWidth="1.2" className="animate-pulse" />
-            </g>
+            {/* ÉTAPE 3 : POSE DU BORDÉ DE COQUE (45% - 70%) */}
+            {hullOpacity > 0 && (
+              <g opacity={hullOpacity} className="transition-opacity duration-300">
+                {/* Complete Solid Hull */}
+                <path
+                  d="M 60 120 
+                     C 70 150, 90 180, 120 188 
+                     L 295 188 
+                     C 325 182, 345 155, 350 110 
+                     L 345 105 
+                     L 55 108 
+                     Z"
+                  fill="url(#shipHullGrad)"
+                  stroke={theme.hullOutline}
+                  strokeWidth="2.5"
+                />
 
-            {/* Waterline & Wave Effects (Ligne de flottaison / Eau de cale) */}
-            <path
-              d="M 40 182 Q 70 178, 100 182 T 160 182 T 220 182 T 280 182 T 340 182 T 380 182 L 380 200 L 40 200 Z"
-              fill="url(#waterGrad)"
-              className="animate-pulse"
-              style={{ animationDuration: '2s' }}
-            />
-            <path
-              d="M 50 184 Q 85 180, 120 184 T 190 184 T 260 184 T 330 184 T 370 184"
-              fill="none"
-              stroke="#38bdf8"
-              strokeWidth="1.5"
-              opacity="0.7"
-            />
+                {/* White Waterline stripe & CORESI Green Band */}
+                <path
+                  d="M 62 135 Q 200 135 348 130"
+                  stroke="#ffffff"
+                  strokeWidth="2"
+                  fill="none"
+                />
+                <path
+                  d="M 64 140 Q 200 140 346 135"
+                  stroke="#3B7A2C"
+                  strokeWidth="3.5"
+                  fill="none"
+                />
 
-            {/* High-Tech Sweep Scanline traversing the vessel */}
-            <line
-              x1={`${(progress / 100) * 320 + 40}`}
-              y1="40"
-              x2={`${(progress / 100) * 320 + 40}`}
-              y2="190"
-              stroke="url(#laserGrad)"
-              strokeWidth="3"
-            />
-            <circle
-              cx={`${(progress / 100) * 320 + 40}`}
-              cy="115"
-              r="4"
-              fill="#10b981"
-              className="animate-ping"
-            />
+                {/* Bulbous Bow Plating */}
+                <ellipse cx="58" cy="180" rx="12" ry="8" fill="#dc2626" stroke="#b91c1c" strokeWidth="1.5" />
+
+                {/* Hull Inscription: CORESI */}
+                <text
+                  x="145"
+                  y="126"
+                  fill="#ffffff"
+                  fontSize="9"
+                  fontWeight="bold"
+                  fontFamily="sans-serif"
+                  letterSpacing="2"
+                >
+                  CORESI
+                </text>
+              </g>
+            )}
+
+            {/* ÉTAPE 4 : SUPERSTRUCTURE & CHÂTEAU DESCENDU PAR GRUE (70% - 90%) */}
+            {superstructureOpacity > 0 && (
+              <g 
+                transform={`translate(0, ${superstructureY})`} 
+                opacity={superstructureOpacity}
+                className="transition-transform duration-200"
+              >
+                {/* Bridge Base Tier */}
+                <rect 
+                  x="240" 
+                  y="72" 
+                  width="70" 
+                  height="34" 
+                  rx="3" 
+                  fill={isLightMode ? '#f1f5f9' : '#1e293b'} 
+                  stroke={theme.dockWall} 
+                  strokeWidth="1.5" 
+                />
+                {/* Bridge Windows */}
+                <rect x="245" y="78" width="8" height="6" rx="1" fill="#38bdf8" />
+                <rect x="257" y="78" width="8" height="6" rx="1" fill="#38bdf8" />
+                <rect x="269" y="78" width="8" height="6" rx="1" fill="#38bdf8" />
+                <rect x="281" y="78" width="8" height="6" rx="1" fill="#38bdf8" />
+                <rect x="293" y="78" width="8" height="6" rx="1" fill="#38bdf8" />
+
+                {/* Upper Bridge Tier */}
+                <rect 
+                  x="252" 
+                  y="52" 
+                  width="45" 
+                  height="20" 
+                  rx="2" 
+                  fill={isLightMode ? '#ffffff' : '#0f172a'} 
+                  stroke={theme.dockWall} 
+                  strokeWidth="1.5" 
+                />
+                <rect x="257" y="56" width="35" height="5" rx="1" fill="#38bdf8" />
+
+                {/* Radar Mast & Antenna */}
+                <line x1="274" y1="36" x2="274" y2="52" stroke={theme.textPrimary} strokeWidth="2" />
+                <line x1="266" y1="40" x2="282" y2="40" stroke="#38bdf8" strokeWidth="2" />
+                <circle cx="274" cy="36" r="3" fill="#22c55e" className="animate-ping" />
+
+                {/* Funnel / Cheminée CORESI */}
+                <rect x="300" y="58" width="14" height="24" rx="2" fill="#1e293b" stroke={theme.dockWall} strokeWidth="1" />
+                <rect x="300" y="66" width="14" height="7" fill="#3B7A2C" /> {/* Green Band */}
+
+                {/* Cargo Deck Hatches */}
+                <rect x="85" y="103" width="36" height="5" rx="1" fill="#475569" />
+                <rect x="135" y="103" width="36" height="5" rx="1" fill="#475569" />
+                <rect x="185" y="103" width="36" height="5" rx="1" fill="#475569" />
+              </g>
+            )}
+
+            {/* Shipyard Gantry Crane (Grue qui pose la passerelle pendant étape 4) */}
+            {progress >= 65 && progress < 88 && (
+              <g className="animate-pulse">
+                {/* Crane Boom Cable */}
+                <line x1="274" y1="10" x2="274" y2={50 + superstructureY} stroke={theme.craneColor} strokeWidth="1.5" strokeDasharray="3 2" />
+                <circle cx="274" cy={50 + superstructureY} r="3" fill={theme.craneColor} />
+              </g>
+            )}
+
+            {/* ÉTAPE 5 : MISE EN EAU DU BASSIN (85% - 100%) */}
+            {waterProgress > 0 && (
+              <g opacity={waterProgress}>
+                {/* Flooding Water Volume */}
+                <rect
+                  x="30"
+                  y={195 - waterProgress * 55}
+                  width="340"
+                  height={waterProgress * 55 + 10}
+                  fill="url(#waterFlow)"
+                />
+                {/* Wavy Water Surface */}
+                <path
+                  d={`M 30 ${195 - waterProgress * 55} 
+                      Q 65 ${191 - waterProgress * 55}, 100 ${195 - waterProgress * 55} 
+                      T 170 ${195 - waterProgress * 55} 
+                      T 240 ${195 - waterProgress * 55} 
+                      T 310 ${195 - waterProgress * 55} 
+                      T 370 ${195 - waterProgress * 55}`}
+                  fill="none"
+                  stroke={theme.waterLine}
+                  strokeWidth="2.5"
+                />
+              </g>
+            )}
           </svg>
 
-          {/* Real-time Status Badge floating in bottom-left */}
-          <div className="absolute bottom-2.5 left-3 flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-slate-900/90 border border-slate-700 text-[10px] font-mono text-emerald-400">
-            <Sparkles className="w-3 h-3 animate-spin" style={{ animationDuration: '4s' }} />
-            <span>CHANTIER ACTIF</span>
+          {/* Current Step Badge in bottom left */}
+          <div 
+            className="absolute bottom-3 left-3 flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-[10px] font-mono font-bold border shadow-sm"
+            style={{ 
+              backgroundColor: isLightMode ? '#f1f5f9' : '#1e293b',
+              borderColor: theme.cardBorder,
+              color: '#3B7A2C'
+            }}
+          >
+            <span>ÉTAPE {currentStage.step}</span>
           </div>
 
-          {/* Coordinate Watermark in bottom-right */}
-          <div className="absolute bottom-2.5 right-3 text-[10px] font-mono text-slate-500">
-            CALE-01 • SECTEUR NAVAL
+          {/* Status Label in bottom right */}
+          <div className="absolute bottom-3 right-3 text-[10px] font-mono" style={{ color: theme.textMuted }}>
+            {progress === 100 ? 'CONSTRUCTION ACHEVÉE' : 'EN COURS D\'ASSEMBLAGE'}
           </div>
         </div>
 
-        {/* 3. BARRE DE PROGRESSION & POURCENTAGE */}
-        <div className="w-full space-y-2.5">
-          <div className="flex items-center justify-between text-xs font-mono">
-            <span className="text-slate-300 font-medium truncate max-w-[280px] sm:max-w-xs text-left">
-              {getStatusText(progress)}
+        {/* 3. BARRE DE PROGRESSION & ÉTAPES CLAIRES */}
+        <div className="w-full space-y-2">
+          <div className="flex items-center justify-between text-xs">
+            <span className="font-bold text-left truncate max-w-[280px]" style={{ color: theme.textPrimary }}>
+              {currentStage.title}
             </span>
-            <span className="text-emerald-400 font-bold ml-2 text-sm">
+            <span className="font-mono font-black text-sm" style={{ color: '#3B7A2C' }}>
               {progress}%
             </span>
           </div>
 
+          <p className="text-[11px] text-left" style={{ color: theme.textMuted }}>
+            {currentStage.desc}
+          </p>
+
           {/* Progress Bar Track */}
-          <div className="w-full h-2.5 bg-slate-900 rounded-full border border-slate-800 p-0.5 overflow-hidden shadow-inner">
+          <div 
+            className="w-full h-3 rounded-full border p-0.5 overflow-hidden"
+            style={{ 
+              backgroundColor: isLightMode ? '#e2e8f0' : '#1e293b',
+              borderColor: theme.cardBorder
+            }}
+          >
             <div
-              className="h-full rounded-full bg-gradient-to-r from-[#2D6020] via-[#3B7A2C] to-emerald-400 transition-all duration-100 ease-out shadow-[0_0_12px_rgba(59,122,44,0.8)] relative"
-              style={{ width: `${progress}%` }}
+              className="h-full rounded-full transition-all duration-100 ease-out shadow-md relative"
+              style={{ 
+                width: `${progress}%`,
+                background: 'linear-gradient(to right, #2D6020, #3B7A2C, #4ade80)'
+              }}
             >
-              {/* Light glow head */}
-              <div className="absolute right-0 top-0 bottom-0 w-2 bg-white/70 rounded-full animate-pulse" />
+              {/* Highlight Head */}
+              <div className="absolute right-0 top-0 bottom-0 w-2.5 bg-white/80 rounded-full animate-pulse" />
             </div>
           </div>
         </div>
 
-        {/* Sub-note */}
-        <p className="mt-4 text-[11px] text-slate-500 tracking-wide">
-          Chaudronnerie Lourde • Charpente Métallique • Offshore &amp; Maritime
-        </p>
+        {/* Subtitle / Footer Note */}
+        <div className="mt-4 flex items-center justify-center gap-3 text-[11px] font-medium" style={{ color: theme.textMuted }}>
+          <span>Chaudronnerie Lourde</span>
+          <span>•</span>
+          <span>Soudage Certifié</span>
+          <span>•</span>
+          <span>Offshore Maritime</span>
+        </div>
       </div>
     </div>
   );
