@@ -11,6 +11,7 @@ import { ProjectsGallery } from './components/sections/ProjectsGallery';
 import { ContactSection } from './components/sections/ContactSection';
 import { Footer } from './components/layout/Footer';
 import { QuoteModal } from './components/modals/QuoteModal';
+import { NavalLoader } from './components/ui/NavalLoader';
 
 export const App: React.FC = () => {
   const [currentLang, setCurrentLang] = useState<Language>(() => {
@@ -32,6 +33,9 @@ export const App: React.FC = () => {
 
   return (
     <div className="min-h-screen flex flex-col font-sans selection:bg-[#3B7A2C] selection:text-white" style={{ backgroundColor: 'var(--bg-base)', color: 'var(--text-primary)' }}>
+      {/* Intro Naval Construction Preloader */}
+      <NavalLoader minDuration={2200} />
+
       {/* Sticky Header */}
       <Navbar
         currentLang={currentLang}
