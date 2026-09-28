@@ -20,7 +20,7 @@ export const Footer: React.FC<FooterProps> = ({ currentLang }) => {
                 <img
                   src="/images/logo/coresi_logo.png"
                   alt="CORESI Logo"
-                  className="h-9 w-auto object-contain"
+                  className="h-10 w-auto object-contain"
                 />
               </div>
               <div>

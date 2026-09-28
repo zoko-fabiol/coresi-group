@@ -81,7 +81,7 @@ export const Navbar: React.FC<NavbarProps> = ({
               <img
                 src="/images/logo/coresi_logo.png"
                 alt="CORESI International Logo"
-                className="h-9 sm:h-10 w-auto object-contain"
+                className="h-10 sm:h-12 w-auto object-contain"
               />
             </div>
             <div className="flex flex-col">
